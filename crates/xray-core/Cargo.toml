@@ -1,0 +1,48 @@
+[package]
+name = "xray-core"
+description = "Data-driven core of the Wickra X-Ray: a serde XraySpec folded over a recorded dataset into XrayFrame render data-models (footprint, order-book heatmap, liquidation map, funding/OI divergence)."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+readme.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[lints]
+workspace = true
+
+[features]
+# `parallel` builds the panels concurrently with rayon; it is on by default. The
+# wasm binding builds with --no-default-features for a sequential build that is
+# byte-identical to the parallel one. `live` pulls the exchange facade to source
+# a live dataset (native-only).
+default = ["parallel"]
+parallel = ["dep:rayon"]
+live = ["dep:wickra-exchange"]
+
+[dependencies]
+# Streaming indicators (514 O(1) indicators) resolved by name + params via the
+# backtester's registry factory (the only name -> indicator resolver); it pulls
+# in wickra-core transitively.
+wickra-backtest-core.workspace = true
+wickra-core.workspace = true
+# Candle + CSV loading for the dataset.
+wickra-data.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+toml.workspace = true
+rust_decimal.workspace = true
+thiserror.workspace = true
+# Data-parallel panel construction; optional (the `parallel` feature).
+rayon = { workspace = true, optional = true }
+# The native exchange facade for a live dataset; optional (`live`).
+wickra-exchange = { workspace = true, optional = true }
+
+[dev-dependencies]
+proptest.workspace = true
+serde.workspace = true
+serde_json.workspace = true
