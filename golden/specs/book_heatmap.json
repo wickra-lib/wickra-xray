@@ -1,0 +1,7 @@
+{
+  "dataset_ref": "golden",
+  "symbol": "GOLD",
+  "panels": [
+    { "kind": "book_heatmap", "price_bin": 0.5, "bucket_ms": 2000, "depth_levels": 8 }
+  ]
+}

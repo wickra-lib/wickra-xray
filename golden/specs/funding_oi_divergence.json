@@ -1,0 +1,7 @@
+{
+  "dataset_ref": "golden",
+  "symbol": "GOLD",
+  "panels": [
+    { "kind": "funding_oi_divergence", "bucket_ms": 2000 }
+  ]
+}
