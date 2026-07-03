@@ -1,0 +1,16 @@
+Package: wickraxray
+Type: Package
+Title: Data-Driven Market-Microstructure Frame Core
+Version: 0.1.0
+Authors@R: person("kingchenc", role = c("aut", "cre"), email = "support@wickra.org")
+Description: R bindings for wickra-xray over its C ABI hub: build an Xray from a
+    spec JSON, drive it with command JSON and read back render frames - the same
+    protocol as the CLI and every other binding.
+License: MIT + file LICENSE | Apache License 2.0
+URL: https://github.com/wickra-lib/wickra-xray
+BugReports: https://github.com/wickra-lib/wickra-xray/issues
+Encoding: UTF-8
+NeedsCompilation: yes
+SystemRequirements: the wickra-xray C ABI shared library (WKXRAY_LIB) and its
+    header (WKXRAY_INC).
+RoxygenNote: 7.3.2

@@ -1,0 +1,4 @@
+useDynLib(wickraxray, .registration = TRUE, .fixes = "C_")
+export(wkxray_version)
+export(wkxray_new)
+export(wkxray_command)
