@@ -10,5 +10,10 @@
 //! re-export block lands in `lib.rs` (P-XRAY-1.16).
 
 mod error;
+mod types;
 
 pub use error::{Error, Result};
+pub use types::{
+    bin_of, round8, BookEvent, BookKind, FundingEvent, LiqSide, LiquidationEvent, OiEvent,
+    OrderedF64, Side, Trade,
+};
