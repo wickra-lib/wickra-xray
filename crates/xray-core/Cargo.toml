@@ -25,17 +25,13 @@ parallel = ["dep:rayon"]
 live = ["dep:wickra-exchange"]
 
 [dependencies]
-# Streaming indicators (514 O(1) indicators) resolved by name + params via the
-# backtester's registry factory (the only name -> indicator resolver); it pulls
-# in wickra-core transitively.
-wickra-backtest-core.workspace = true
-wickra-core.workspace = true
-# Candle + CSV loading for the dataset.
-wickra-data.workspace = true
+# The data-driven boundary (spec / command / frame as JSON). The MVP panels are
+# pure aggregations of the dataset streams, so no wickra-core indicator registry
+# is pulled in (see src/indicator_set.rs); those deps return with the first
+# indicator-backed panel.
 serde.workspace = true
 serde_json.workspace = true
 toml.workspace = true
-rust_decimal.workspace = true
 thiserror.workspace = true
 # Data-parallel panel construction; optional (the `parallel` feature).
 rayon = { workspace = true, optional = true }
