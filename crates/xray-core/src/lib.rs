@@ -17,6 +17,7 @@ mod indicator_set;
 pub mod panels;
 mod spec;
 mod types;
+mod xray;
 
 pub use book::BookState;
 pub use dataset::{Candle, Dataset};
@@ -29,3 +30,4 @@ pub use types::{
     bin_of, round8, BookEvent, BookKind, FundingEvent, LiqSide, LiquidationEvent, OiEvent,
     OrderedF64, Side, Trade,
 };
+pub use xray::{build_frame, Bounds, Xray};
