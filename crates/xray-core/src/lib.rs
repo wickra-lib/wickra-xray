@@ -10,6 +10,7 @@
 //! re-export block lands in `lib.rs` (P-XRAY-1.16).
 
 mod book;
+mod config;
 mod dataset;
 mod error;
 mod frame;
@@ -20,6 +21,7 @@ mod types;
 mod xray;
 
 pub use book::BookState;
+pub use config::Config;
 pub use dataset::{Candle, Dataset};
 pub use error::{Error, Result};
 pub use frame::{
