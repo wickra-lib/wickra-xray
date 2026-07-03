@@ -307,6 +307,23 @@ mod tests {
     }
 
     #[test]
+    fn panels_keep_spec_order() {
+        // A three-panel spec in a deliberately non-alphabetical order.
+        let spec = r#"{ "dataset_ref": "m", "symbol": "AAA", "panels": [
+            { "kind": "liquidation_map", "price_bin": 1.0 },
+            { "kind": "footprint", "price_bin": 1.0, "bucket_ms": 60000 },
+            { "kind": "funding_oi_divergence", "bucket_ms": 1000 }
+        ] }"#;
+        let mut xray = Xray::new(spec).unwrap();
+        xray.load(Dataset::from_json(DATASET).unwrap()).unwrap();
+        let json = serde_json::to_string(&xray.frame().unwrap()).unwrap();
+        let liq = json.find("liquidation_map").unwrap();
+        let fp = json.find("footprint").unwrap();
+        let div = json.find("funding_oi_divergence").unwrap();
+        assert!(liq < fp && fp < div, "panels must keep spec order");
+    }
+
+    #[test]
     fn build_frame_rejects_an_invalid_spec() {
         // price_bin <= 0 fails validation.
         let bad: XraySpec = serde_json::from_str(
