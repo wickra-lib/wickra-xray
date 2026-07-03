@@ -14,6 +14,7 @@ mod dataset;
 mod error;
 mod frame;
 mod indicator_set;
+pub mod panels;
 mod spec;
 mod types;
 
