@@ -1,0 +1,7 @@
+{
+  "dataset_ref": "golden",
+  "symbol": "GOLD",
+  "panels": [
+    { "kind": "footprint", "price_bin": 1.0, "bucket_ms": 60000 }
+  ]
+}

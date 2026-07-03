@@ -1,0 +1,10 @@
+{
+  "dataset_ref": "golden",
+  "symbol": "GOLD",
+  "panels": [
+    { "kind": "footprint", "price_bin": 1.0, "bucket_ms": 60000 },
+    { "kind": "book_heatmap", "price_bin": 0.5, "bucket_ms": 2000, "depth_levels": 8 },
+    { "kind": "liquidation_map", "price_bin": 1.0 },
+    { "kind": "funding_oi_divergence", "bucket_ms": 2000 }
+  ]
+}

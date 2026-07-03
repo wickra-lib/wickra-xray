@@ -1,0 +1,7 @@
+{
+  "dataset_ref": "golden",
+  "symbol": "GOLD",
+  "panels": [
+    { "kind": "liquidation_map", "price_bin": 1.0 }
+  ]
+}
