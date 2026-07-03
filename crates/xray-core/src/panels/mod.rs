@@ -6,4 +6,5 @@
 //! `build_panel_data` dispatcher that routes an `XrayPanel` to the right
 //! builder lands once all four builders exist (§1.9).
 
+pub mod book_heatmap;
 pub mod footprint;
