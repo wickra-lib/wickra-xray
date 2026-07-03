@@ -12,6 +12,7 @@
 mod book;
 mod dataset;
 mod error;
+mod frame;
 mod indicator_set;
 mod spec;
 mod types;
@@ -19,6 +20,9 @@ mod types;
 pub use book::BookState;
 pub use dataset::{Candle, Dataset};
 pub use error::{Error, Result};
+pub use frame::{
+    DivergenceData, FootprintData, HeatmapData, LiqEvent, LiqMapData, PanelData, XrayFrame,
+};
 pub use spec::{XrayPanel, XrayPanelKind, XraySpec};
 pub use types::{
     bin_of, round8, BookEvent, BookKind, FundingEvent, LiqSide, LiquidationEvent, OiEvent,
