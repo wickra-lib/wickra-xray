@@ -14,7 +14,7 @@
 
 [workspace]
 resolver = "2"
-members = ["crates/xray-core", "crates/xray-cli"]
+members = ["crates/xray-core", "crates/xray-cli", "bindings/c"]
 # The fuzz crate is its own (detached) workspace — cargo-fuzz builds it on a
 # nightly toolchain with sanitizer flags.
 exclude = ["fuzz"]
