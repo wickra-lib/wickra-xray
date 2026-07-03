@@ -1,0 +1,26 @@
+[package]
+name = "wickra-xray"
+description = "Reference command-line X-Ray over the Wickra xray-core: load a spec and a recorded dataset, build a frame, print it as text or JSON."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+readme.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "wickra-xray"
+path = "src/main.rs"
+
+[dependencies]
+# The data-driven frame core.
+xray-core.workspace = true
+serde_json.workspace = true
+clap.workspace = true
