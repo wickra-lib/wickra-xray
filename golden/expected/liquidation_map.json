@@ -1,0 +1,1 @@
+{"symbol":"GOLD","cursor_ts":24000,"panels":[{"kind":"liquidation_map","events":[{"ts":7000,"price_bin":102.0,"qty":2.0,"side":"long"},{"ts":14000,"price_bin":102.0,"qty":3.0,"side":"long"},{"ts":21000,"price_bin":100.0,"qty":1.0,"side":"short"}]}]}
