@@ -1,0 +1,48 @@
+[package]
+name = "wickra-xray-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# The core without the `parallel` feature: the fuzz build is sequential and lean,
+# and never pulls rayon or the native exchange facade.
+xray-core = { path = "../crates/xray-core", default-features = false }
+
+# Detach from the parent workspace — cargo-fuzz builds this crate on its own with
+# sanitizer flags on a nightly toolchain.
+[workspace]
+
+[[bin]]
+name = "spec_parse"
+path = "fuzz_targets/spec_parse.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "dataset_parse"
+path = "fuzz_targets/dataset_parse.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "build_frame"
+path = "fuzz_targets/build_frame.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "book_fold"
+path = "fuzz_targets/book_fold.rs"
+test = false
+doc = false
+bench = false
