@@ -2625,6 +2625,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "wickra-xray-example"
+version = "0.1.0"
+dependencies = [
+ "serde_json",
+ "xray-core",
+]
+
+[[package]]
 name = "wickra-xray-node"
 version = "0.1.0"
 dependencies = [
