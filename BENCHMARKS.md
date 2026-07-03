@@ -26,9 +26,23 @@ cargo bench -p xray-bench
 
 ## Results
 
-_To be filled in from the criterion run in the test-rigor / docs phase._ Figures
-will be the median estimate on a single machine; treat them as orders of
-magnitude, not guarantees — they vary with CPU and toolchain.
+Measured on one developer machine (release build, `parallel` feature), median
+criterion estimates. Treat these as orders of magnitude, not guarantees — they
+vary with CPU and toolchain.
+
+`build_frame`, full fold to the last event:
+
+| Events | 1 panel (footprint) | 4 panels (all) |
+|--------|--------------------:|---------------:|
+| 1k     |            ~0.19 ms |         ~15 ms |
+| 10k    |             ~2.8 ms |          ~2.0 s |
+| 100k   |              ~33 ms | (multi-second) |
+
+The single-panel footprint fold is roughly linear in the event count (~0.3 µs per
+trade). The four-panel figure is dominated by the `book_heatmap` panel, whose
+dense `time × price` intensity matrix grows with **both** axes; on large datasets
+a coarser `bucket_ms` / `price_bin` (fewer time columns and price rows) keeps it
+bounded. `frame` and `frame_at(ts)` share the same fold cost for the same window.
 
 ## Caveats
 
