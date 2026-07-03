@@ -11,6 +11,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -69,7 +70,9 @@ func TestGoldenParity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("%s: %v", name, err)
 		}
-		if raw != string(expected) {
+		// The blessed file carries a trailing newline from the CLI's println;
+		// the command reply does not. Trim both so the comparison is exact.
+		if strings.TrimSpace(raw) != strings.TrimSpace(string(expected)) {
 			t.Fatalf("%s: golden mismatch", name)
 		}
 	}
