@@ -12,6 +12,7 @@
 mod book;
 mod dataset;
 mod error;
+mod indicator_set;
 mod spec;
 mod types;
 
