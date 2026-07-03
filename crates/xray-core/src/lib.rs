@@ -1,13 +1,24 @@
 //! Data-driven core of the Wickra X-Ray.
 //!
-//! A serde `XraySpec` is folded over a recorded dataset — trades, order-book
-//! diffs, funding and open interest — into an `XrayFrame`: render data-models
-//! for the four microstructure panels (footprint, order-book heatmap,
-//! liquidation map, funding/OI divergence). Panels build in parallel (rayon) or
-//! sequentially (the WASM fallback), producing a byte-identical `XrayFrame`.
+//! A serde [`XraySpec`] is folded over a recorded [`Dataset`] — trades,
+//! order-book diffs, funding and open interest — into an [`XrayFrame`]: render
+//! data-models for the four microstructure panels (footprint, order-book
+//! heatmap, liquidation map, funding/OI divergence). These are render
+//! data-models, describing *what* to draw, not renderer commands.
 //!
-//! The public surface is assembled module by module through P-XRAY-1; the final
-//! re-export block lands in `lib.rs` (P-XRAY-1.16).
+//! Every binding drives the core through one entry point,
+//! [`Xray::command_json`], whose reply is always a JSON string; the pure
+//! [`build_frame`] builder sits underneath. With the `parallel` feature (on by
+//! default) the panels build concurrently with rayon; `--no-default-features`
+//! builds them sequentially for the WASM target — both yield a byte-identical
+//! frame.
+//!
+//! ```
+//! use xray_core::Xray;
+//! let mut xray = Xray::new("").unwrap();
+//! let reply = xray.command_json(r#"{"cmd":"version"}"#).unwrap();
+//! assert!(reply.contains("version"));
+//! ```
 
 mod book;
 mod config;
@@ -33,3 +44,9 @@ pub use types::{
     OrderedF64, Side, Trade,
 };
 pub use xray::{build_frame, Bounds, Xray};
+
+/// The crate version, e.g. `"0.1.0"`.
+#[must_use]
+pub fn version() -> &'static str {
+    Xray::version()
+}

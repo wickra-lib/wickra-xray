@@ -184,6 +184,18 @@ pub fn build_frame(dataset: &Dataset, spec: &XraySpec, cursor_ts: i64) -> Result
     let effective = spec.to_ts.map_or(cursor_ts, |to| cursor_ts.min(to));
     let mut win = dataset.window(spec.from_ts, Some(effective));
     win.sort();
+    // Panels are independent, so build them concurrently when `parallel` is on.
+    // rayon's indexed collect preserves spec order, so the frame is identical to
+    // the sequential build.
+    #[cfg(feature = "parallel")]
+    let panels = {
+        use rayon::prelude::*;
+        spec.panels
+            .par_iter()
+            .map(|panel| build_panel_data(panel, &win, effective))
+            .collect::<Result<Vec<_>>>()?
+    };
+    #[cfg(not(feature = "parallel"))]
     let panels = spec
         .panels
         .iter()
