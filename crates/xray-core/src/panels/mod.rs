@@ -8,3 +8,4 @@
 
 pub mod book_heatmap;
 pub mod footprint;
+pub mod liquidation_map;
