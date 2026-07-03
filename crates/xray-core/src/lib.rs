@@ -9,11 +9,13 @@
 //! The public surface is assembled module by module through P-XRAY-1; the final
 //! re-export block lands in `lib.rs` (P-XRAY-1.16).
 
+mod book;
 mod dataset;
 mod error;
 mod spec;
 mod types;
 
+pub use book::BookState;
 pub use dataset::{Candle, Dataset};
 pub use error::{Error, Result};
 pub use spec::{XrayPanel, XrayPanelKind, XraySpec};
