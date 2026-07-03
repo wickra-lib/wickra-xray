@@ -8,3 +8,7 @@
 //!
 //! The public surface is assembled module by module through P-XRAY-1; the final
 //! re-export block lands in `lib.rs` (P-XRAY-1.16).
+
+mod error;
+
+pub use error::{Error, Result};
