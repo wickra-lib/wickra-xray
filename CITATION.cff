@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "wickra-xray"
+abstract: >-
+  A market-microstructure explorer built on the Wickra core: a data-driven
+  XraySpec is folded over a recorded dataset into render data-models (XrayFrame)
+  for footprint, order-book heatmap, liquidation map and funding/OI divergence,
+  exposed as a JSON-over-C-ABI data API in ten languages with a web renderer.
+type: software
+authors:
+  - alias: kingchenc
+    website: "https://wickra.org"
+repository-code: "https://github.com/wickra-lib/wickra-xray"
+url: "https://wickra.org"
+license:
+  - MIT
+  - Apache-2.0
+keywords:
+  - trading
+  - microstructure
+  - orderbook
+  - footprint
+  - finance
