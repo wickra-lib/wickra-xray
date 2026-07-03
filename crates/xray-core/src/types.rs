@@ -133,3 +133,48 @@ pub fn round8(x: f64) -> f64 {
 pub fn bin_of(price: f64, bin: f64) -> f64 {
     round8((price / bin).floor() * bin)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn round8_rounds_to_eight_places() {
+        // Tuple compare avoids the scalar float_cmp lint.
+        assert_eq!(
+            (
+                round8(1.234_567_894),
+                round8(2.0 / 3.0),
+                round8(-1.000_000_004)
+            ),
+            (1.234_567_89, 0.666_666_67, -1.0)
+        );
+    }
+
+    #[test]
+    fn bin_of_floors_to_the_lower_edge() {
+        assert_eq!(
+            (
+                bin_of(100.7, 1.0),
+                bin_of(101.0, 1.0),
+                bin_of(100.4, 0.5),
+                bin_of(100.9, 0.5),
+            ),
+            (100.0, 101.0, 100.0, 100.5)
+        );
+    }
+
+    #[test]
+    fn ordered_f64_is_a_total_order() {
+        let mut xs = [OrderedF64(2.0), OrderedF64(-1.0), OrderedF64(0.0)];
+        xs.sort();
+        assert_eq!(
+            xs.iter().map(|o| o.0).collect::<Vec<_>>(),
+            vec![-1.0, 0.0, 2.0]
+        );
+        // total_cmp is total: NaN compares equal to itself and sorts after +inf,
+        // never panicking.
+        assert_eq!(OrderedF64(f64::NAN), OrderedF64(f64::NAN));
+        assert!(OrderedF64(f64::NAN) > OrderedF64(f64::INFINITY));
+    }
+}
