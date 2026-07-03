@@ -8,4 +8,5 @@
 
 pub mod book_heatmap;
 pub mod footprint;
+pub mod funding_oi_divergence;
 pub mod liquidation_map;
