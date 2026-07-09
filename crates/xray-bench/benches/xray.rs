@@ -122,6 +122,14 @@ fn bench_build_frame(criterion: &mut Criterion) {
         let data = dataset(events);
         let cursor = data.bounds().map_or(0, |(_, hi, _)| hi);
         for (label, panels) in [("1panel", footprint_only()), ("4panel", all_panels())] {
+            // The full four-panel fold scales super-linearly with the event
+            // count (the book-heatmap and liquidation panels dominate): at
+            // 100k events a single iteration runs for minutes, which blows the
+            // nightly bench's time budget. Cap the four-panel case at 10k; the
+            // cheap single-panel case still covers the 100k scaling point.
+            if label == "4panel" && events > 10_000 {
+                continue;
+            }
             let spec = spec(panels);
             group.throughput(Throughput::Elements(u64::try_from(events).unwrap()));
             group.bench_with_input(
