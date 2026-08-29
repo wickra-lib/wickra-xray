@@ -7,11 +7,20 @@
 [![CI](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/ci.svg)](https://github.com/wickra-lib/wickra-xray/actions/workflows/ci.yml)
 [![CodeQL](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/codeql.svg)](https://github.com/wickra-lib/wickra-xray/actions/workflows/codeql.yml)
 [![codecov](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/codecov.svg)](https://codecov.io/gh/wickra-lib/wickra-xray)
+[![GitHub release](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/release.svg)](https://github.com/wickra-lib/wickra-xray/releases/latest)
+[![crates.io](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/crates.svg)](https://crates.io/crates/wickra-xray)
+[![PyPI](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/pypi.svg)](https://pypi.org/project/wickra-xray/)
+[![npm](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/npm.svg)](https://www.npmjs.com/package/wickra-xray)
+[![NuGet](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/nuget.svg)](https://www.nuget.org/packages/Wickra.Xray)
+[![Maven Central](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/maven.svg)](https://central.sonatype.com/artifact/org.wickra/wickra-xray)
+[![Go module](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/go.svg)](https://pkg.go.dev/github.com/wickra-lib/wickra-xray-go)
+[![R-universe](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/r-universe.svg)](https://wickra-lib.r-universe.dev)
 [![License: MIT OR Apache-2.0](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/license.svg)](#license)
 [![OpenSSF Scorecard](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/scorecard.svg)](https://scorecard.dev/viewer/?uri=github.com/wickra-lib/wickra-xray)
-[![OpenSSF Best Practices](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/best-practices.svg)](https://www.bestpractices.dev/)
+[![OpenSSF Best Practices](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/best-practices.svg)](https://www.bestpractices.dev)
 [![Build provenance](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/provenance.svg)](https://github.com/wickra-lib/wickra-xray/attestations)
 [![Docs](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/docs.svg)](https://wickra.org)
+[![Verified across 10 languages](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/verified.svg)](golden/)
 [![Live demo](https://img.shields.io/badge/live%20demo-live.wickra.org-3b82f6)](https://live.wickra.org)
 
 ---
@@ -188,3 +197,26 @@ Wickra X-Ray is analysis software: it computes microstructure views over
 historical and live market data. It is provided "as is", without warranty of any
 kind, and is **not financial advice** — it places no orders. Trading carries risk
 of loss; review the code and use at your own discretion.
+
+---
+
+<p align="center">
+  <a href="https://github.com/wickra-lib/wickra-xray">
+    <img alt="GitHub stars" src="https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/stars.svg">
+  </a>
+  <a href="https://github.com/wickra-lib/wickra-xray/network/members">
+    <img alt="GitHub forks" src="https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/forks.svg">
+  </a>
+  <a href="https://github.com/wickra-lib/wickra-xray/issues">
+    <img alt="GitHub issues" src="https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/issues.svg">
+  </a>
+</p>
+
+<p align="center">
+  Built on <a href="https://github.com/wickra-lib/wickra">Wickra</a>. If it saved you time, the cheapest way to say thanks is to ⭐ the repo.
+</p>
+
+<p align="center">
+  <img alt="wickra-xray star history" width="640"
+       src="https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/star-history.svg">
+</p>

@@ -22,4 +22,6 @@ exclude = [
     "^https?://pypi\\.org/project/wickra-xray",
     "^https?://www\\.npmjs\\.com/package/wickra-xray",
     "^https?://pkg\\.go\\.dev/github\\.com/wickra-lib/wickra-xray-go",
+    "^https?://www\\.nuget\\.org/packages/Wickra\\.Xray",
+    "^https?://central\\.sonatype\\.com/artifact/org\\.wickra/wickra-xray",
 ]
