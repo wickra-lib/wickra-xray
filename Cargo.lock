@@ -2615,9 +2615,9 @@ dependencies = [
 
 [[package]]
 name = "wickra-core"
-version = "0.9.9"
+version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7cf4e7af4f00596d9bd33c66a9aaf935687959dd14d063b8b7d7d749e102680e"
+checksum = "3801b8e584405b19c5db178a8aae4587250a27daf26397ce3bde9e4c0badb115"
 dependencies = [
  "rayon",
  "thiserror",
@@ -2626,7 +2626,7 @@ dependencies = [
 [[package]]
 name = "wickra-exchange"
 version = "0.1.0"
-source = "git+https://github.com/wickra-lib/wickra-exchange#83e123e83a80f2f8a30cf7b1a51b6623025bda0a"
+source = "git+https://github.com/wickra-lib/wickra-exchange#d7c3af75f74ea43a22364e25ae5423ca6ab861e1"
 dependencies = [
  "futures-util",
  "reqwest",
@@ -2638,7 +2638,7 @@ dependencies = [
 [[package]]
 name = "wickra-exchange-core"
 version = "0.1.0"
-source = "git+https://github.com/wickra-lib/wickra-exchange#83e123e83a80f2f8a30cf7b1a51b6623025bda0a"
+source = "git+https://github.com/wickra-lib/wickra-exchange#d7c3af75f74ea43a22364e25ae5423ca6ab861e1"
 dependencies = [
  "base64",
  "hex",

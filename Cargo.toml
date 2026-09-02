@@ -37,8 +37,8 @@ categories = ["finance", "visualization", "command-line-utilities"]
 # USER-GO gated) and is used only by the optional `live` feature. A `version` is
 # pinned alongside `git` so the dependency is not a wildcard (cargo-deny's
 # `bans.wildcards = deny`).
-wickra-core = "0.9"
-wickra-data = "0.9"
+wickra-core = "1.0"
+wickra-data = "1.0"
 wickra-exchange = { git = "https://github.com/wickra-lib/wickra-exchange", version = "0.1" }
 # The only name -> indicator registry in the ecosystem: the backtester's factory
 # resolves any of the 514 indicators by name + params into an object-safe
