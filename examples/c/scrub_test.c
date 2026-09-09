@@ -18,6 +18,8 @@
  * is a list comprehension rather than string surgery in a language with no JSON
  * library. Both halves are the same property; they are tested where each is
  * cheap to state correctly.
+ *
+ * The properties below are the ones docs/STREAMING.md states for streaming through time.
  */
 #include <stdio.h>
 #include <stdlib.h>

@@ -16,6 +16,8 @@ namespace WickraXray.Tests;
 // window, the other never sees the later events -- so a window bound that is
 // inclusive on the wrong side, a bucket that rounds outward, or a panel that
 // keeps state past the cursor separates them.
+//
+// The properties below are the ones docs/STREAMING.md states for streaming through time.
 public class ScrubberTests
 {
     // An event timestamp in the golden dataset (1000..24000 in 1000-unit steps),

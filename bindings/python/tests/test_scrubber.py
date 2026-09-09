@@ -11,6 +11,9 @@ inclusive on the wrong side, a bucket that rounds outward, or a panel that
 keeps state past the cursor separates them. Byte equality of the serialized
 frame is the strongest statement available here and the same one the golden
 tests make, so the assertion is on the JSON rather than on a parsed subset.
+
+The properties below are the ones docs/STREAMING.md states for streaming through
+time.
 """
 
 import json
