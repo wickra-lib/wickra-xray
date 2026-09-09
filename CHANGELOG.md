@@ -25,8 +25,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   cross-language byte-equality tests across every binding.
 - Test rigor: conformance, golden, `frame_at == frame`, property-based
   invariants, four cargo-fuzz targets, and the `xray-bench` criterion suite.
-- One runnable "build a frame" example per language and per-language guides
-  under `docs/`.
+- One runnable "build a frame" example per language -- including a browser
+  demo for the WASM binding -- and per-language guides under `docs/`.
+- A header-only C++ wrapper (`wickra_xray.hpp`) over the C ABI: the handle is
+  owned, the two-call length protocol is handled, and a failed call raises.
+- The R package resolves the C ABI itself: `configure` / `configure.win`
+  download the matching release asset and bundle the shared library, so
+  `install.packages()` works without `WKXRAY_INC` / `WKXRAY_LIB` preset.
 - CI/CD: a multi-OS test matrix across ten languages, CodeQL, OpenSSF Scorecard,
   zizmor, link-check, benchmark and metadata-audit workflows, plus authored
   (tag-gated) release and web-deploy workflows.

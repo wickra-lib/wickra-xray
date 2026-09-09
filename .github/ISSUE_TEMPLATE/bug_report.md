@@ -9,11 +9,11 @@ labels: bug
 A clear description of what is wrong.
 
 **Reproduction**
-The smallest input that reproduces the problem — a `ScanSpec` and a small sample
-universe, or the exact `command` JSON.
+The smallest input that reproduces the problem — an `XraySpec` and a small
+recorded dataset, or the exact `command` JSON.
 
 ```
-# paste a minimal repro here (spec + a few candles / a command JSON)
+# paste a minimal repro here (spec + a few trades / book diffs, or a command JSON)
 ```
 
 **Expected vs actual**
@@ -23,7 +23,8 @@ universe, or the exact `command` JSON.
 **Environment**
 - `wickra-xray` version:
 - Language / binding (Rust, Python, Node.js, WASM, C, C++, C#, Go, Java, R):
-- Mode (batch `scan_batch` / streaming):
+- Panel (footprint / heatmap / liquidation map / funding-OI):
+- Build (parallel `rayon` / sequential WASM fallback):
 - OS:
 
 **Additional context**

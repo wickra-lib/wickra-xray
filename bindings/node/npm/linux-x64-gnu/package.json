@@ -4,7 +4,9 @@
   "description": "Native binding for wickra-xray (Linux x64 GNU). Installed automatically as an optional dependency of wickra-xray on matching platforms.",
   "main": "wickra-xray.linux-x64-gnu.node",
   "files": [
-    "wickra-xray.linux-x64-gnu.node"
+    "wickra-xray.linux-x64-gnu.node",
+    "LICENSE-MIT",
+    "LICENSE-APACHE"
   ],
   "license": "MIT OR Apache-2.0",
   "engines": {

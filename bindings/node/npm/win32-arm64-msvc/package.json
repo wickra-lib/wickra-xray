@@ -4,7 +4,9 @@
   "description": "Native binding for wickra-xray (Windows arm64 MSVC). Installed automatically as an optional dependency of wickra-xray on matching platforms.",
   "main": "wickra-xray.win32-arm64-msvc.node",
   "files": [
-    "wickra-xray.win32-arm64-msvc.node"
+    "wickra-xray.win32-arm64-msvc.node",
+    "LICENSE-MIT",
+    "LICENSE-APACHE"
   ],
   "license": "MIT OR Apache-2.0",
   "engines": {

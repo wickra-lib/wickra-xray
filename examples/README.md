@@ -16,6 +16,7 @@ examples are self-contained: the spec and trades are inline, so there is no shar
 | C# | [`csharp/Frame/`](csharp/Frame/) | `dotnet run --project examples/csharp/Frame` |
 | Java | [`java/Frame.java`](java/Frame.java) | see the header comment |
 | R | [`r/frame.R`](r/frame.R) | `Rscript examples/r/frame.R` |
+| WASM | [`wasm/frame.html`](wasm/) | build the module, then serve the repo root — see [`wasm/README.md`](wasm/README.md) |
 
 The native bindings (Python, Node.js) load their own compiled library. The bindings
 that go through the C ABI (Go, C#, Java, R, and the C / C++ example itself) need the

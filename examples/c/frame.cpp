@@ -1,10 +1,15 @@
 // A minimal C++ example: build a frame through the wickra-xray C ABI.
-#include <cstddef>
+//
+// This uses the header-only C++ wrapper (`wickra_xray.hpp`) rather than calling
+// the C entry points directly: the handle is owned and freed for you, the
+// two-call length protocol is handled, and a failed call raises instead of
+// returning a negative integer. Building this example is also what keeps the
+// wrapper compiling -- a header nothing includes is a header nothing checks.
+#include <exception>
 #include <iostream>
 #include <string>
-#include <vector>
 
-#include "wickra_xray.h"
+#include "wickra_xray.hpp"
 
 namespace {
 const char *SPEC =
@@ -17,35 +22,21 @@ const char *LOAD =
     R"({"ts":1400,"price":101.8,"qty":0.5,"side":"sell"}]}})";
 
 const char *FRAME = R"({"cmd":"frame"})";
-
-// Length-out protocol: learn the length, then read into a caller buffer.
-std::string run(WickraXray *xray, const char *cmd) {
-    int len = wickra_xray_command(xray, cmd, nullptr, 0);
-    if (len < 0) {
-        std::cerr << "command failed: code " << len << "\n";
-        return {};
-    }
-    std::vector<char> buf(static_cast<std::size_t>(len) + 1);
-    wickra_xray_command(xray, cmd, buf.data(),
-                        static_cast<std::size_t>(buf.size()));
-    return std::string(buf.data());
-}
 }  // namespace
 
 int main() {
-    WickraXray *xray = wickra_xray_new(SPEC);
-    if (xray == nullptr) {
-        std::cerr << "failed to build xray\n";
+    try {
+        wickra::Xray xray(SPEC);
+
+        const std::string loaded = xray.command(LOAD);
+        const std::string frame = xray.command(FRAME);
+
+        std::cout << "wickra-xray " << wickra::Xray::version() << "\n";
+        std::cout << "loaded: " << loaded << "\n";
+        std::cout << "frame: " << frame << "\n";
+    } catch (const std::exception &e) {
+        std::cerr << "wickra-xray: " << e.what() << "\n";
         return 1;
     }
-
-    std::string loaded = run(xray, LOAD);
-    std::string frame = run(xray, FRAME);
-
-    std::cout << "wickra-xray " << wickra_xray_version() << "\n";
-    std::cout << "loaded: " << loaded << "\n";
-    std::cout << "frame: " << frame << "\n";
-
-    wickra_xray_free(xray);
     return 0;
 }

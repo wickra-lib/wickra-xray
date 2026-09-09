@@ -1,10 +1,24 @@
-# Keep compiled artifacts out of the R source tarball built by `R CMD build`.
-# The package links the C ABI out-of-tree (WKXRAY_INC / WKXRAY_LIB), so only the
-# glue objects and any locally built shared library live under src/ — none of
-# them belong in a distributable source package; they are produced at install.
+# Keep everything configure stages or the compiler produces out of the R source
+# tarball built by `R CMD build`. The package is source-distributed: configure
+# fetches the C ABI at install time (or takes it from WKXRAY_INC / WKXRAY_LIB), so
+# none of these belong in the distributable.
+^src/wickra_xray\.h$
+^src/wickra_xray\.dll$
+^src/wickra_xray\.def$
+^src/libwickra_xray\.dll\.a$
+^src/libwickra_xray\.(so|dylib)$
+^src/wickra-xray-c\.tar\.gz$
+^src/wickra-xray-c$
+^src/Makevars$
 ^src/.*\.o$
-^src/.*\.so$
-^src/.*\.dll$
-^src/.*\.dylib$
+^src/wickraxray\.(dll|so|dylib)$
 ^src/symbols\.rds$
+^src/dlltool\.log$
 ^\.gitignore$
+
+# The golden corpus lives at the repository root, outside this package, so
+# tests/golden.R only resolves when run from there -- which CI does explicitly.
+# `R CMD check` runs everything under tests/ from the built tarball, where the
+# corpus does not exist, and that is what r-universe runs on every platform. A
+# shipped test should not reason about the repository above it at all.
+^tests/golden\.R$
