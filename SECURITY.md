@@ -10,13 +10,12 @@ inventory and trust boundaries.
 
 ## Supported versions
 
-This project is pre-release. Security fixes target the `main` branch and the most
-recent published version once a release exists.
+Security fixes are applied to the latest released version, `0.1.0`, only; please
+upgrade to the newest release before reporting an issue.
 
 | Version | Supported |
 |---------|-----------|
-| `main`  | ✅        |
-| `0.1.x` (upcoming) | ✅ |
+| 0.1.0 (latest) | ✅ |
 
 ## Reporting a vulnerability
 
