@@ -38,41 +38,8 @@ stopifnot(inherits(try(wkxray_new("not json"), silent = TRUE), "try-error"))
 inband <- wkxray_command(xray, '{"cmd":"nope"}')
 stopifnot(grepl('"ok":false', inband, fixed = TRUE))
 
-## cross-language golden parity: build the xray from each committed
-## golden/specs/*.json, load the shared golden/data.json and read back the frame,
-## and assert the response equals golden/expected/<spec>.json byte-for-byte. The
-## binding returns the core's compact command output verbatim, so byte equality
-## is the exact cross-language parity check. The fixtures arrive in a later
-## phase; until then the golden section is skipped.
-golden_dir <- function() {
-  d <- normalizePath(getwd(), mustWork = FALSE)
-  for (i in seq_len(8)) {
-    g <- file.path(d, "golden")
-    if (dir.exists(file.path(g, "specs"))) {
-      return(g)
-    }
-    d <- dirname(d)
-  }
-  NULL
-}
-
-g <- golden_dir()
-if (!is.null(g)) {
-  dataset <- trimws(paste(
-    readLines(file.path(g, "data.json"), warn = FALSE), collapse = "\n"
-  ))
-  load_all <- paste0('{"cmd":"load","dataset":', dataset, '}')
-  for (spec_path in list.files(file.path(g, "specs"), pattern = "\\.json$", full.names = TRUE)) {
-    name <- basename(spec_path)
-    spec_json <- paste(readLines(spec_path, warn = FALSE), collapse = "\n")
-    expected <- trimws(paste(
-      readLines(file.path(g, "expected", name), warn = FALSE), collapse = "\n"
-    ))
-    gxray <- wkxray_new(spec_json)
-    invisible(wkxray_command(gxray, load_all))
-    got <- wkxray_command(gxray, '{"cmd":"frame"}')
-    stopifnot(identical(trimws(got), expected))
-  }
-}
+## The cross-language golden parity cases live in golden.R, which is kept out
+## of the built tarball: the corpus sits at the repository root, above this
+## package, and a shipped test must not reason about what lies above it.
 
 cat("wickra-xray R tests passed\n")

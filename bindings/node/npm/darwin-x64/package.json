@@ -4,7 +4,9 @@
   "description": "Native binding for wickra-xray (macOS x64). Installed automatically as an optional dependency of wickra-xray on matching platforms.",
   "main": "wickra-xray.darwin-x64.node",
   "files": [
-    "wickra-xray.darwin-x64.node"
+    "wickra-xray.darwin-x64.node",
+    "LICENSE-MIT",
+    "LICENSE-APACHE"
   ],
   "license": "MIT OR Apache-2.0",
   "engines": {

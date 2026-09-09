@@ -137,21 +137,88 @@ fuzz/               cargo-fuzz targets (spec_parse, dataset_parse, build_frame, 
 examples/           one runnable "build a frame" example per language
 ```
 
-## Building from source
+## Building everything from source
+
+The Rust core, the CLI and the WASM package build from the workspace; each
+binding has its own toolchain and builds on its own.
 
 ```bash
-cargo build --workspace
-cargo test  --workspace --all-features
-cargo test  --workspace --no-default-features   # sequential build path
-cargo clippy --workspace --all-targets --all-features -- -D warnings
-cargo run -p wickra-xray -- --spec golden/specs/footprint.json --stdin --format json < golden/data.json
+# Rust core, CLI, C ABI, WASM crate
+cargo build --workspace --all-features
+
+# The fuzz crate is a detached workspace (cargo-fuzz builds it with sanitizer
+# flags on nightly), so --workspace does not reach it.
+cargo check --manifest-path fuzz/Cargo.toml
+
+# Python: an abi3 wheel via maturin
+python -m venv .venv && . .venv/bin/activate
+pip install maturin pytest
+maturin develop --release -m bindings/python/Cargo.toml
+
+# Node.js: a native addon via napi-rs
+( cd bindings/node && npm ci && npm run build )
+
+# WASM: a browser/bundler package via wasm-pack
+wasm-pack build bindings/wasm --target bundler --out-dir pkg
+
+# C ABI: the cdylib and staticlib every non-native binding links against
+cargo build -p wickra-xray-c --release
+
+# C / C++: the example harness, which is also the header smoke test
+cmake -S examples/c -B examples/c/build && cmake --build examples/c/build
+
+# C# / Go / Java / R link the C ABI above; each needs it built first
+( cd bindings/csharp && dotnet build )
+( cd bindings/go && go build ./... )
+( cd bindings/java && mvn -q package )
+R CMD INSTALL bindings/r
+
+# The web front-end that renders the frames
+( cd web && npm ci && npm run build )
 ```
+
+The R package resolves the C ABI itself: `configure` downloads the
+`wickra-xray-c-<triple>.tar.gz` asset matching its version and bundles the
+shared library. Set `WKXRAY_INC` and `WKXRAY_LIB` to build against a locally
+built one instead.
+
+## Testing
+
+```bash
+# The core, in both build paths — they must agree byte for byte
+cargo test --workspace --all-features
+cargo test --workspace --no-default-features
+
+cargo clippy --workspace --all-targets --all-features -- -D warnings
+cargo clippy --workspace --all-targets --no-default-features -- -D warnings
+cargo fmt --all --check
+cargo deny check
+
+# Per binding
+"$(pwd)/.venv/bin/python" -m pytest bindings/python/tests -q
+( cd bindings/node && npm test )
+( cd bindings/go && go test ./... )
+( cd bindings/java && mvn -q test )
+( cd bindings/csharp && dotnet test )
+Rscript bindings/r/tests/run_tests.R
+Rscript bindings/r/tests/golden.R          # golden parity: run from the repo root
+ctest --test-dir examples/c/build --output-on-failure
+
+# Fuzzing (nightly)
+cargo +nightly fuzz run spec_parse -- -max_total_time=30
+```
+
+Every binding runs the same committed corpus under [`golden/`](golden/) and has
+to reproduce each expected frame **byte for byte** — that is what makes the
+cross-language claim checkable rather than asserted. Regenerating those files is
+the bless loop in [`golden/README.md`](golden/README.md), and the diff is meant
+to be read before it is committed.
 
 ## Requirements
 
 - **Rust** ≥ 1.86 (workspace MSRV; the Node binding needs ≥ 1.88).
 - Binding toolchains as needed: Node ≥ 22, Python ≥ 3.9, a C toolchain, .NET 8,
-  JDK 22+, Go 1.23, R — see each `bindings/<lang>/README.md`.
+  JDK 22+, Go 1.23, R ≥ 2.10 — see each `bindings/<lang>/README.md`.
 
 ## Benchmarks
 
