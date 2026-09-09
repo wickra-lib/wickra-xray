@@ -32,6 +32,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The R package resolves the C ABI itself: `configure` / `configure.win`
   download the matching release asset and bundle the shared library, so
   `install.packages()` works without `WKXRAY_INC` / `WKXRAY_LIB` preset.
+- A release gate: every publish job waits on `gate`, which refuses to run
+  unless the tagged commit's CI is green, and on `guard`, which refuses to
+  publish from anything but a `v*` tag. Build provenance covers the NuGet
+  package, the jar and the C ABI archives alongside the crates and wheels.
 - CI/CD: a multi-OS test matrix across ten languages, CodeQL, OpenSSF Scorecard,
   zizmor, link-check, benchmark and metadata-audit workflows, plus authored
   (tag-gated) release and web-deploy workflows.

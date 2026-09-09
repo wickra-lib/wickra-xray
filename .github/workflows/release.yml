@@ -3,6 +3,9 @@ name: Release
 on:
   push:
     tags: ["v*"]
+  # A manual run is for re-driving a release whose tag already exists -- a
+  # publish that flaked, an asset that did not attach. It is not a way to
+  # publish from a branch, and the `guard` job below enforces that.
   workflow_dispatch:
 
 # Least-privilege default for the auto-injected GITHUB_TOKEN. The publish jobs
@@ -27,10 +30,114 @@ env:
 
 jobs:
   # --------------------------------------------------------------------------
+  # Nothing irreversible happens after a build that failed.
+  #
+  # The `guard` job below checks the ref before anything is built. This one is
+  # the barrier between building and publishing: without it every publish job
+  # depends only on its own artefacts, so a crate that fails to build stops
+  # crates.io and lets PyPI, npm, NuGet, Maven Central and the Go mirror go
+  # ahead -- a half-published version that no registry takes back.
+  # --------------------------------------------------------------------------
+  gate:
+    name: Nothing publishes before this
+    needs: [python-wheels, python-sdist, node-build, cli-binaries, c-abi-build, wasm-build]
+    runs-on: ubuntu-latest
+    # Generous because this job waits for ci.yml to settle on the tagged commit;
+    # the wait itself is bounded to 45 minutes inside the step.
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - name: The tagged commit must have passed CI
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+
+          # ci.yml runs on pushes to main and on pull requests, never on a tag,
+          # so this workflow cannot see the tag's health in its own run. Ask what
+          # the commit itself was graded, which is the merge commit the tag
+          # points at and therefore the state that was actually tested.
+          #
+          # A run that is still going carries conclusion `null`, which reads the
+          # same as one that failed -- and a tag pushed straight after its merge
+          # lands while ci.yml is still queued. Refusing there turns "tagged a
+          # minute early" into a failed release that needs a rerun, so wait for
+          # the verdict instead of treating its absence as one. A red conclusion
+          # still ends this immediately: only the undecided case waits.
+          deadline=$(( $(date +%s) + 45 * 60 ))
+          while :; do
+            ci_state=$(gh api "repos/${REPO}/actions/workflows/ci.yml/runs?head_sha=${SHA}&per_page=1" \
+                 -q '(.workflow_runs[0] // {}) | "\(.status // "missing") \(.conclusion // "null")"')
+            ci_status=${ci_state%% *}
+            ci=${ci_state##* }
+            if [ "$ci" = "success" ]; then
+              break
+            fi
+            if [ "$ci" != "null" ]; then
+              echo "::error::ci.yml on ${SHA} is ${ci}; refusing to publish"
+              exit 1
+            fi
+            if [ "$(date +%s)" -ge "$deadline" ]; then
+              echo "::error::ci.yml on ${SHA} did not finish within 45 minutes (${ci_status}); refusing to publish"
+              exit 1
+            fi
+            echo "ci.yml on ${SHA}: ${ci_status} -- waiting"
+            sleep 30
+          done
+          echo "ci.yml on ${SHA}: success"
+
+          # And nothing else that did run may have failed. Listing required
+          # workflows by name would go stale -- a path-filtered one legitimately
+          # does not run for a version bump -- so the rule is about outcomes
+          # rather than about a roster: whatever ran, none of it is red.
+          bad=$(gh api "repos/${REPO}/actions/runs?head_sha=${SHA}&per_page=100" \
+                  -q '[.workflow_runs[]
+                       | select(.name != "Release")
+                       | select(.conclusion == "failure" or .conclusion == "timed_out"
+                                or .conclusion == "cancelled")
+                       | .name] | unique | join(", ")')
+          if [ -n "$bad" ]; then
+            echo "::error::the tagged commit has failing runs (${bad}); refusing to publish"
+            exit 1
+          fi
+          echo "every workflow that ran on this commit is green"
+
+  # Everything that publishes runs behind this. A `workflow_dispatch` can be
+  # started from any ref the actor can see, and every job here pushes to a
+  # registry that does not take things back -- so a dispatch from `main` would
+  # publish whatever `main` happened to be, under whatever version its manifests
+  # happened to carry. Tag pushes satisfy this by construction; a dispatch has to
+  # name a tag.
+  guard:
+    name: Refuse to publish from anything but a tag
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check the ref
+        env:
+          REF: ${{ github.ref }}
+        shell: bash
+        run: |
+          case "$REF" in
+            refs/tags/v*)
+              echo "publishing from $REF"
+              ;;
+            *)
+              echo "::error::release.yml publishes to crates.io, PyPI, npm, NuGet and Maven Central, none of which can be undone. It runs on a v* tag; got '$REF'. Re-run this workflow with a tag ref."
+              exit 1
+              ;;
+          esac
+
+  # --------------------------------------------------------------------------
   # crates.io: xray-core then the wickra-xray crate (CLI binary)
   # --------------------------------------------------------------------------
   cargo-publish:
     name: Publish to crates.io
+    needs: [gate, guard]
     timeout-minutes: 45
     runs-on: ubuntu-latest
     environment: release
@@ -98,6 +205,7 @@ jobs:
   # PyPI: cross-platform wheels + sdist
   # --------------------------------------------------------------------------
   python-wheels:
+    needs: guard
     name: Build wheels (${{ matrix.target }}/${{ matrix.manylinux }} on ${{ matrix.os }})
     timeout-minutes: 45
     strategy:
@@ -138,6 +246,7 @@ jobs:
           path: bindings/python/dist/*
 
   python-sdist:
+    needs: guard
     name: Build Python sdist
     timeout-minutes: 45
     runs-on: ubuntu-latest
@@ -160,7 +269,7 @@ jobs:
   python-publish:
     name: Publish to PyPI
     timeout-minutes: 45
-    needs: [python-wheels, python-sdist]
+    needs: [gate, python-wheels, python-sdist]
     runs-on: ubuntu-latest
     environment: release
     steps:
@@ -181,6 +290,7 @@ jobs:
   # npm: per-platform native binaries + main meta-package
   # --------------------------------------------------------------------------
   node-build:
+    needs: guard
     name: Node build (${{ matrix.target }})
     timeout-minutes: 45
     strategy:
@@ -222,7 +332,7 @@ jobs:
   node-publish:
     name: Publish to npm
     timeout-minutes: 45
-    needs: node-build
+    needs: [gate, node-build]
     runs-on: ubuntu-latest
     environment: release
     permissions:
@@ -354,14 +464,13 @@ jobs:
   # --------------------------------------------------------------------------
   # WASM: wasm-pack build + npm publish (as `wickra-xray-wasm`)
   # --------------------------------------------------------------------------
-  wasm-publish:
-    name: Publish wickra-xray-wasm to npm
+  wasm-build:
+    name: Build wickra-xray-wasm
+    needs: guard
     timeout-minutes: 45
     runs-on: ubuntu-latest
-    environment: release
     permissions:
       contents: read
-      id-token: write # Sigstore provenance from the GitHub OIDC token
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -401,12 +510,47 @@ jobs:
         with:
           name: wasm-tarball
           path: bindings/wasm/pkg/wickra-xray-wasm-*.tgz
+
+  wasm-publish:
+    name: Publish wickra-xray-wasm to npm
+    needs: [gate, wasm-build]
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: read
+      id-token: write # Sigstore provenance from the GitHub OIDC token
+    steps:
+      - name: Set up Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+      - name: Download the packed tarball
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: wasm-tarball
+          path: wasm-pkg
       - name: Publish wickra-xray-wasm to npm (idempotent)
-        working-directory: bindings/wasm/pkg
         run: |
-          out=$(npm publish --access public --provenance 2>&1) && echo "$out" \
-            || (echo "$out" | grep -q "You cannot publish over" && echo "skip: version already on npm" \
-                || (echo "$out"; exit 1))
+          set -euo pipefail
+          tarball=$(find wasm-pkg -name 'wickra-xray-wasm-*.tgz' | head -1)
+          if [ -z "$tarball" ]; then
+            echo "::error::wasm-build produced no tarball"
+            exit 1
+          fi
+          # "./" is load-bearing: npm reads a bare `dir/file.tgz` as the
+          # `owner/repo` GitHub shorthand and tries to clone it rather than
+          # reading the file, dying on `git ls-remote` before it ever reaches
+          # the registry.
+          if out=$(npm publish "./$tarball" --access public --provenance 2>&1); then
+            echo "$out"
+          elif printf '%s' "$out" | grep -q "You cannot publish over"; then
+            echo "skip: version already on npm"
+          else
+            echo "$out"
+            exit 1
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -415,6 +559,7 @@ jobs:
   # runner and attach it to the GitHub Release (in addition to `cargo install`).
   # --------------------------------------------------------------------------
   cli-binaries:
+    needs: guard
     name: CLI binary (${{ matrix.target }})
     timeout-minutes: 45
     strategy:
@@ -464,6 +609,7 @@ jobs:
   # GitHub Release and consumed by the C#, Java and Go publish jobs.
   # --------------------------------------------------------------------------
   c-abi-build:
+    needs: guard
     name: C ABI library (${{ matrix.target }})
     timeout-minutes: 45
     strategy:
@@ -514,7 +660,7 @@ jobs:
   csharp-publish:
     name: Publish to NuGet
     timeout-minutes: 45
-    needs: c-abi-build
+    needs: [gate, c-abi-build]
     runs-on: ubuntu-latest
     environment: release
     permissions:
@@ -591,7 +737,7 @@ jobs:
   java-publish:
     name: Publish to Maven Central
     timeout-minutes: 45
-    needs: c-abi-build
+    needs: [gate, c-abi-build]
     runs-on: ubuntu-latest
     environment: release
     steps:
@@ -645,6 +791,18 @@ jobs:
           CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: mvn -B -f bindings/java -Prelease deploy -DskipTests
+      # Maven Central had the jar and the release page did not. Every other
+      # artefact this workflow produces is attached there, and whoever wants to
+      # check a build against its provenance should not have to visit a
+      # different registry for one of them.
+      - name: Upload the jar for the release page and the attestation
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: java-jar
+          path: |
+            bindings/java/target/*.jar
+            !bindings/java/target/*-tests.jar
+          if-no-files-found: error
 
   # Mirror the in-repo Go module to the standalone wickra-xray-go repository
   # so `go get github.com/wickra-lib/wickra-xray-go` builds with no extra
@@ -655,7 +813,7 @@ jobs:
   go-mirror:
     name: Mirror the Go module to wickra-xray-go
     timeout-minutes: 45
-    needs: c-abi-build
+    needs: [gate, c-abi-build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -672,7 +830,14 @@ jobs:
           set -e
           out=wickra-xray-go-module
           mkdir -p "$out/include" "$out/lib"
-          cp bindings/go/*.go "$out/"
+          # Sources only. The test files stay behind: they locate golden/ by
+          # walking up from the working directory, and the published module has
+          # no repository above it -- a consumer running `go test ./...` on the
+          # module gets a suite that can never find its fixtures.
+          for f in bindings/go/*.go; do
+            case "$f" in *_test.go) continue ;; esac
+            cp "$f" "$out/"
+          done
           cp bindings/go/include/wickra_xray.h "$out/include/"
           cp bindings/go/README.md "$out/"
           cp LICENSE-MIT LICENSE-APACHE "$out/"
@@ -700,6 +865,25 @@ jobs:
             mkdir -p "$out/lib/$dir"; cp "$src" "$out/lib/$dir/"
           done
           echo "assembled module:"; find "$out" -type f | sort
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: "1.23"
+      # Nothing here compiled the tree that is about to be published. A module
+      # that does not build is a `go get` failure for every consumer, found by
+      # them rather than here, and the mirror has no CI of its own.
+      - name: Build and vet the assembled module before pushing it
+        shell: bash
+        working-directory: wickra-xray-go-module
+        env:
+          CGO_ENABLED: "1"
+        run: |
+          set -e
+          # The runner is linux/amd64, so that is the platform whose staged
+          # library cgo will link against here. The others are checked by their
+          # presence in the tree above, which the assembly step fails without.
+          export LD_LIBRARY_PATH="$PWD/lib/linux_amd64:$LD_LIBRARY_PATH"
+          go vet ./...
+          go build ./...
       - name: Push to wickra-xray-go and tag the release
         shell: bash
         env:
@@ -732,7 +916,22 @@ jobs:
   github-release:
     name: Attach assets to the draft GitHub Release
     timeout-minutes: 45
-    needs: [cargo-publish, python-publish, node-publish, wasm-publish, cli-binaries, c-abi-build]
+    # Every job that produces an artefact this page carries, not only most of
+    # them. csharp-publish, java-publish and go-mirror were missing, so a run in
+    # which one of them failed still attached assets and published the release:
+    # a page that reads as complete while a registry is empty.
+    needs:
+      [
+        cargo-publish,
+        python-publish,
+        node-publish,
+        wasm-publish,
+        cli-binaries,
+        c-abi-build,
+        csharp-publish,
+        java-publish,
+        go-mirror,
+      ]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -778,6 +977,7 @@ jobs:
           find artifacts -type f -name "*.crate" -exec cp {} release-assets/ \;
           find artifacts -type f -name "*.cdx.json" -exec cp {} release-assets/ \;
           find artifacts -type f -name "*.nupkg" -exec cp {} release-assets/ \;
+          find artifacts -type f -name "*.jar" -exec cp {} release-assets/ \;
           ls -lh release-assets/
           echo "asset-count=$(ls release-assets/ | wc -l)"
       - name: Create / update the draft GitHub Release with assets
@@ -836,7 +1036,16 @@ jobs:
   attestations:
     name: Attest build provenance
     timeout-minutes: 45
-    needs: [cargo-publish, python-wheels, python-sdist, github-release]
+    needs:
+      [
+        cargo-publish,
+        python-wheels,
+        python-sdist,
+        c-abi-build,
+        csharp-publish,
+        java-publish,
+        github-release,
+      ]
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -854,6 +1063,25 @@ jobs:
           pattern: wheels-*
           path: artifacts/python
           merge-multiple: true
+      # The crates and wheels were attested; the .NET, Java and C ABI artefacts
+      # were not. Three of the things this workflow ships had no provenance to
+      # be checked against.
+      - name: Download the NuGet package
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: nuget-package
+          path: artifacts/nuget
+      - name: Download the jar
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: java-jar
+          path: artifacts/java
+      - name: Download the C ABI archives
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: c-abi-*
+          path: artifacts/c-abi
+          merge-multiple: true
       - name: Attest build provenance
         id: attest
         uses: actions/attest-build-provenance@0f67c3f4856b2e3261c31976d6725780e5e4c373 # v4.1.1
@@ -862,6 +1090,9 @@ jobs:
             artifacts/crates/*.crate
             artifacts/python/*.whl
             artifacts/python/*.tar.gz
+            artifacts/nuget/*.nupkg
+            artifacts/java/*.jar
+            artifacts/c-abi/*.tar.gz
       - name: Attach provenance bundle to the GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
