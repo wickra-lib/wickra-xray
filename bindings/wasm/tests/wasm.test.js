@@ -25,6 +25,8 @@
 // It runs under `--target nodejs`, so no browser and no headless runner are
 // needed. The published artifact stays the `web` build; this one exists to be
 // executed.
+//
+// The properties below are the ones docs/STREAMING.md states for streaming through time.
 
 const { test } = require("node:test");
 const assert = require("node:assert");

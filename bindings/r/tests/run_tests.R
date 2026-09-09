@@ -51,6 +51,8 @@ stopifnot(grepl('"ok":false', inband, fixed = TRUE))
 ## the cursor and would show the future. All three read the frame as text: this
 ## package has no JSON dependency, and the byte-exact comparison against a
 ## truncated dataset is made from Python, Node and WASM where parsing is native.
+## The properties below are the ones docs/STREAMING.md states for streaming
+## through time.
 scrub_spec <- paste0(
   '{"dataset_ref":"m","symbol":"AAA","panels":[{"kind":"footprint",',
   '"price_bin":1.0,"bucket_ms":60000}]}'

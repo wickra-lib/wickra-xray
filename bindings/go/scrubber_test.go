@@ -11,6 +11,8 @@ package wickra
 // window, the other never sees the later events -- so a window bound that is
 // inclusive on the wrong side, a bucket that rounds outward, or a panel that
 // keeps state past the cursor separates them.
+//
+// The properties below are the ones docs/STREAMING.md states for streaming through time.
 
 import (
 	"encoding/json"

@@ -5,6 +5,8 @@
 // proves the ABI, this one proves the wrapper over it -- the owned handle, the
 // two-call length protocol it hides, and that a failure arrives as an exception
 // rather than as a negative integer a caller can ignore.
+//
+// The properties below are the ones docs/STREAMING.md states for streaming through time.
 #include <exception>
 #include <fstream>
 #include <iostream>

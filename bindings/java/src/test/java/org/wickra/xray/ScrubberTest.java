@@ -25,6 +25,8 @@ import org.junit.jupiter.api.Test;
 // truncated at t is checked from Python, Node and WASM, where clipping the
 // dataset is a filter over parsed JSON. This binding has no JSON dependency and
 // adding one to state the same property would be a dependency for a test.
+//
+// The properties below are the ones docs/STREAMING.md states for streaming through time.
 class ScrubberTest {
     // Both are event timestamps in the golden dataset, which runs 1000..24000 in
     // 1000-unit steps, so neither lands in a gap where the cursor would have

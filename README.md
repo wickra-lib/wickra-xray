@@ -50,6 +50,23 @@ and a **web** front-end (Vue + Canvas) renders the frames in the browser.
 - **Liquidation map** — liquidation events clustered by price bin.
 - **Funding / OI divergence** — funding, open interest and price on one time axis.
 
+```rust
+use xray_core::{build_frame, Dataset, Xray, XraySpec};
+
+// The full window: fold the whole dataset and build every panel the spec names.
+let spec: XraySpec = XraySpec::from_json(spec_json)?;
+let mut dataset = Dataset::from_json(dataset_json)?;
+dataset.sort();
+let cursor = dataset.bounds().map_or(0, |(_, hi, _)| hi);
+let frame = build_frame(&dataset, &spec, cursor)?;
+
+// Scrubbing: the same spec and dataset, folded to any moment. `frame_at(t)`
+// returns exactly what the full window would return over a dataset ending at t.
+let mut xray = Xray::new(spec_json)?;
+xray.command_json(&format!(r#"{{"cmd":"load","dataset":{dataset_json}}}"#))?;
+let earlier = xray.command_json(r#"{"cmd":"frame_at","ts":1700000000000}"#)?;
+```
+
 ## Status
 
 **Pre-release — functionally complete, CI-verified, not yet published.** The core,
