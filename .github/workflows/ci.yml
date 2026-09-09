@@ -609,6 +609,39 @@ jobs:
         run: wasm-pack build --target web
         working-directory: bindings/wasm
 
+      # The job used to stop at the line above: the binding was compiled on
+      # every push and executed on none of them, while the README advertises a
+      # live in-browser demo and the core documents the sequential WASM path as
+      # byte-identical to the parallel one. A second build for node makes the
+      # module loadable without a browser; `pkg/` stays what ships.
+      - name: Build the wasm binding for node
+        run: wasm-pack build --target nodejs --out-dir pkg-node
+        working-directory: bindings/wasm
+      # The toolchain download flakes on the runners often enough that a retry
+      # with no code change is the standard fix, the same way the node, python
+      # and examples jobs handle it.
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        id: setup_node_wasm
+        continue-on-error: true
+        with:
+          node-version: "22"
+      - name: Pause before retrying the toolchain download
+        if: steps.setup_node_wasm.outcome == 'failure'
+        run: sleep 30
+        shell: bash
+      - name: Retry the toolchain download
+        if: steps.setup_node_wasm.outcome == 'failure'
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+      # An explicit glob rather than `node --test tests/`: Node 22 reads a bare
+      # directory argument as a module path and fails with MODULE_NOT_FOUND,
+      # while Node 20 scans it. The glob behaves the same on both.
+      - name: Run the wasm tests
+        shell: bash
+        run: node --test tests/*.test.js
+        working-directory: bindings/wasm
+
   web:
     timeout-minutes: 30
     name: Web renderer
