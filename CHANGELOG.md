@@ -36,6 +36,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   unless the tagged commit's CI is green, and on `guard`, which refuses to
   publish from anything but a `v*` tag. Build provenance covers the NuGet
   package, the jar and the C ABI archives alongside the crates and wheels.
+- Five static checks under `scripts/` that CI runs on every push: every binding's
+  surface against the C ABI header, every version declaration against every
+  other, absolute links in the binding READMEs, committed licence texts per
+  published package, and the R glue against the header it compiles with.
 - CI/CD: a multi-OS test matrix across ten languages, CodeQL, OpenSSF Scorecard,
   zizmor, link-check, benchmark and metadata-audit workflows, plus authored
   (tag-gated) release and web-deploy workflows.

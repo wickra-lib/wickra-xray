@@ -1,9 +1,10 @@
 name: CodeQL
 
-# Static analysis security testing. Analyses the Rust core and the Python /
-# JavaScript binding surfaces with GitHub's CodeQL engine. Results appear under
-# Security → Code scanning. `build-mode: none` analyses source directly — no
-# compilation step — for every language here.
+# Static analysis security testing. Analyses the Rust core and the Python,
+# JavaScript, C# and Java binding surfaces with GitHub's CodeQL engine. Results
+# appear under Security → Code scanning. `build-mode: none` analyses source
+# directly, with no compilation step; C# autobuilds and Java is built manually,
+# because CodeQL cannot analyse either from source alone.
 on:
   push:
     branches: [main]
@@ -39,17 +40,44 @@ jobs:
             build-mode: none
           - language: javascript-typescript
             build-mode: none
+          - language: csharp
+            build-mode: autobuild
+          - language: java-kotlin
+            build-mode: manual
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
+      # Before `init`, not after. CodeQL prepares to trace the compiler it can
+      # see at initialisation; a toolchain installed afterwards is a different
+      # one than the one that ends up building, and the analysis silently
+      # describes something that was never compiled. A build step belongs after
+      # init -- being traced is the point -- but the toolchain it uses does not.
+      #
+      # The pom targets release 22 and the runner's default JDK is older, so the
+      # compile fails without this. Same toolchain the `java` CI job uses.
+      - name: Set up the JDK the pom targets
+        if: matrix.language == 'java-kotlin'
+        uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95 # v5.6.0
+        with:
+          distribution: temurin
+          java-version: "22"
+          cache: maven
+
       - name: Initialize CodeQL
         uses: github/codeql-action/init@e4fba868fa4b1b91e1fdab776edc8cfbe6e9fb81 # v4.37.3
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
+          config-file: ./.github/codeql/codeql-config.yml
+
+      # The binding compiles on its own: it is a thin wrapper over the C ABI and
+      # the native library is only needed to run, not to build.
+      - name: Build the Java binding for the manual build mode
+        if: matrix.language == 'java-kotlin'
+        run: mvn -B -f bindings/java package -DskipTests
 
       - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@e4fba868fa4b1b91e1fdab776edc8cfbe6e9fb81 # v4.37.3
