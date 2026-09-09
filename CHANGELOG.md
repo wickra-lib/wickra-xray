@@ -25,6 +25,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   cross-language byte-equality tests across every binding.
 - Test rigor: conformance, golden, `frame_at == frame`, property-based
   invariants, four cargo-fuzz targets, and the `xray-bench` criterion suite.
+- Golden parity and the scrubber equality are checked from every binding,
+  including the C ABI and WASM: `frame_at(t)` must equal the frame over a
+  dataset that ends at `t`, which is the property the scrubbing claim rests on
+  and which no full-window golden fixture can see.
 - One runnable "build a frame" example per language -- including a browser
   demo for the WASM binding -- and per-language guides under `docs/`.
 - A header-only C++ wrapper (`wickra_xray.hpp`) over the C ABI: the handle is

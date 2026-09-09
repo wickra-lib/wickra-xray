@@ -29,6 +29,7 @@ node_modules/
 
 # WASM build artifacts
 bindings/wasm/pkg/
+bindings/wasm/pkg-node/
 
 # Web front-end (Vite) build artifacts
 web/node_modules/
@@ -50,7 +51,26 @@ bindings/r/.rlib/
 bindings/r/src/*.o
 bindings/r/src/*.so
 bindings/r/src/*.dll
+# configure / configure.win stage the C ABI into src/ at install time. They are
+# build output, not sources: .Rbuildignore keeps them out of the R tarball, and
+# these keep them out of the index, where a plain `git add -A` after a local
+# install would otherwise pick them up.
+bindings/r/src/*.dylib
+bindings/r/src/*.dll.a
+bindings/r/src/*.def
+bindings/r/src/wickra_xray.h
+bindings/r/src/Makevars
+bindings/r/src/symbols.rds
+bindings/r/src/dlltool.log
+bindings/r/src/wickra-xray-c/
+bindings/r/src/wickra-xray-c.tar.gz
 bindings/r/..Rcheck/
+
+# Example build output. The Java example is compiled to a directory beside it by
+# the command in its own header comment, and by the `examples` CI job; the C and
+# C++ examples and the ABI tests beside them build into examples/c/build.
+examples/java/out/
+examples/c/build/
 
 # Local secrets — never commit credentials.
 .env

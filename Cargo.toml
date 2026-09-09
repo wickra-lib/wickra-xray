@@ -32,13 +32,20 @@ keywords = ["trading", "microstructure", "orderbook", "footprint", "finance"]
 categories = ["finance", "visualization", "command-line-utilities"]
 
 [workspace.dependencies]
-# Wickra ecosystem. wickra-core and wickra-data ship on crates.io; the exchange
-# facade is consumed from git until its first crates.io release (its tag is
-# USER-GO gated) and is used only by the optional `live` feature. A `version` is
-# pinned alongside `git` so the dependency is not a wildcard (cargo-deny's
-# `bans.wildcards = deny`).
-wickra-core = "0.9"
-wickra-data = "0.9"
+# Wickra ecosystem. The exchange facade is consumed from git until its first
+# crates.io release (its tag is USER-GO gated) and is used only by the optional
+# `live` feature. A `version` is pinned alongside `git` so the dependency is not
+# a wildcard (cargo-deny's `bans.wildcards = deny`).
+#
+# There were `wickra-core = "0.9"` and `wickra-data = "0.9"` entries here that no
+# member ever referenced: the panels are pure aggregations of the dataset streams
+# and resolve no indicator by name, so nothing in this workspace depends on
+# either crate. Both had reached 1.0.4 while these declarations still said 0.9,
+# and a caret pin cannot cross a major -- so they read as current and could not
+# move. The 0.9.9 that does appear in Cargo.lock arrives transitively through
+# `wickra-exchange-core`, which pins it: that pin moves in wickra-exchange, not
+# here, and re-adding a declaration here would not affect it. It would instead
+# put two wickra-core majors in one graph the moment a member did use one.
 wickra-exchange = { git = "https://github.com/wickra-lib/wickra-exchange", version = "0.1" }
 # The only name -> indicator registry in the ecosystem: the backtester's factory
 # resolves any of the 514 indicators by name + params into an object-safe
