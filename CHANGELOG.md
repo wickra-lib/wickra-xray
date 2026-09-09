@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-09-10
+
 ### Added
 
 - The `xray-core` data-driven core: `XraySpec` (JSON/TOML), `Dataset` (six
@@ -51,4 +53,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (`deny.toml`, `osv-scanner.toml`, `lychee.toml`), lint configuration
   (`clippy.toml`), `repo-metadata.toml`, and dual `MIT OR Apache-2.0` licensing.
 
-[Unreleased]: https://github.com/wickra-lib/wickra-xray/commits/main
+[Unreleased]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/wickra-lib/wickra-xray/releases/tag/v0.1.0
