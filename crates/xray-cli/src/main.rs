@@ -1,8 +1,8 @@
 //! The `wickra-xray` reference CLI.
 //!
-//! Loads an [`XraySpec`](xray_core::XraySpec) and a recorded dataset (a
+//! Loads an [`XraySpec`](wickra_xray_core::XraySpec) and a recorded dataset (a
 //! directory of per-stream JSON files or a dataset JSON on stdin), builds a
-//! frame through `xray-core`, and prints it as text or JSON.
+//! frame through `wickra-xray-core`, and prints it as text or JSON.
 
 mod args;
 mod run;

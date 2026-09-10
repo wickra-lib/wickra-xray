@@ -1,14 +1,14 @@
 //! End-to-end verification of the `wickra-xray` binary (§2.4 verify clause).
 //!
 //! Runs the built binary against a fixture dataset and checks that `--format
-//! json` reproduces `xray-core`'s frame byte-for-byte and that `--at` yields an
+//! json` reproduces `wickra-xray-core`'s frame byte-for-byte and that `--at` yields an
 //! earlier, clipped frame.
 
 use std::fs;
 use std::path::PathBuf;
 use std::process::Command;
 
-use xray_core::{Dataset, Xray};
+use wickra_xray_core::{Dataset, Xray};
 
 const SPEC: &str = r#"{ "dataset_ref": "m", "symbol": "AAA",
     "panels": [ { "kind": "footprint", "price_bin": 1.0, "bucket_ms": 60000 } ] }"#;

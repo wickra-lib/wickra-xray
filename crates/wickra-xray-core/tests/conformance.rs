@@ -7,7 +7,7 @@ use std::fmt::Debug;
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 
-use xray_core::{
+use wickra_xray_core::{
     BookKind, DivergenceData, FootprintData, HeatmapData, LiqEvent, LiqMapData, LiqSide, PanelData,
     Side, Xray, XrayFrame, XrayPanel, XrayPanelKind,
 };

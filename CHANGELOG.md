@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- The `xray-core` data-driven core: `XraySpec` (JSON/TOML), `Dataset` (six
+- The `wickra-xray-core` data-driven core: `XraySpec` (JSON/TOML), `Dataset` (six
   streams — candles, trades, order-book snapshots/diffs, funding, open interest,
   liquidations), the four panel builders (footprint, order-book heatmap,
   liquidation map, funding/OI divergence), `build_frame` / `frame_at`, and the
@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - A deterministic golden corpus (dataset, specs, byte-exact expected frames) and
   cross-language byte-equality tests across every binding.
 - Test rigor: conformance, golden, `frame_at == frame`, property-based
-  invariants, four cargo-fuzz targets, and the `xray-bench` criterion suite.
+  invariants, four cargo-fuzz targets, and the `wickra-xray-bench` criterion suite.
 - Golden parity and the scrubber equality are checked from every binding,
   including the C ABI and WASM: `frame_at(t)` must equal the frame over a
   dataset that ends at `t`, which is the property the scrubbing claim rests on

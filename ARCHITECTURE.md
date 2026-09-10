@@ -11,7 +11,7 @@ natively, across the C ABI, in WASM and in the browser, byte-for-byte identical.
 ```
 CONSUMERS   CLI: crates/xray-cli   ·   web/ (Vue + Canvas)   ·   any language via its binding (command JSON)
       ▲ XrayFrame JSON                                                             ▲
-CORE  crates/xray-core:  XraySpec (JSON) → Dataset fold (trades / book / funding·OI)
+CORE  crates/wickra-xray-core:  XraySpec (JSON) → Dataset fold (trades / book / funding·OI)
                          → four microstructure panels → XrayFrame → frame_at(ts)
       ▼ data-driven JSON API in ten languages (like backtest run_json / terminal command_json)
 BINDINGS  python · node · wasm · c (C-ABI hub) → c / c++ / c# / go / java / r

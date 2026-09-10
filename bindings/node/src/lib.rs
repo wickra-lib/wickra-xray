@@ -12,7 +12,7 @@
 use napi::Result;
 use napi_derive::napi;
 
-use xray_core::Xray as CoreXray;
+use wickra_xray_core::Xray as CoreXray;
 
 /// Build a napi error from a message.
 fn err(message: impl Into<String>) -> napi::Error {

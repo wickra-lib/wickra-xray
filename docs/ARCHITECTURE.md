@@ -2,7 +2,7 @@
 
 The top-level [ARCHITECTURE.md](../ARCHITECTURE.md) gives the high-level shape;
 this page covers how the core actually turns a spec + a dataset into a frame. The
-whole product is **one data-driven core** (`xray-core`) and N thin consumers — the
+whole product is **one data-driven core** (`wickra-xray-core`) and N thin consumers — the
 CLI, the web renderer and the ten language bindings — each of which only ships a
 spec, loads a dataset and reads back a frame.
 
@@ -23,7 +23,7 @@ XrayFrame { symbol, cursor_ts, panels: Vec<PanelData> }
 the exact bytes every binding returns from a `frame` command
 ```
 
-- **`XraySpec`** (`crates/xray-core/src/spec.rs`) — `symbol`, optional `from_ts`/`to_ts`, and an ordered list of `XrayPanel`. `validate()` rejects an empty symbol, empty panels, non-positive `price_bin` and non-positive `bucket_ms`.
+- **`XraySpec`** (`crates/wickra-xray-core/src/spec.rs`) — `symbol`, optional `from_ts`/`to_ts`, and an ordered list of `XrayPanel`. `validate()` rejects an empty symbol, empty panels, non-positive `price_bin` and non-positive `bucket_ms`.
 - **`Dataset`** (`src/dataset.rs`) — six streams (`candles`, `trades`, `book`, `funding`, `oi`, `liquidations`); `sort()` orders each by timestamp, `window(from, to)` slices inclusively, `bounds()` returns `(from_ts, to_ts, count)`.
 - **`build_frame`** (`src/xray.rs`) — windows the dataset to `min(cursor_ts, to_ts)`, then folds each panel independently. The panels are order-preserving, so `frame.panels[i]` always matches `spec.panels[i]`.
 - **Panels** (`src/panels/`) — one builder per kind; each returns a `PanelData` render data-model, never a draw command. See [PANELS.md](PANELS.md).

@@ -8,7 +8,7 @@ reviewed, CI-green pull requests. Status below is updated as phases complete.
 
 0. **Scaffold** — workspace, governance, supply-chain config, `.github`
    scaffolding. *Done.*
-1. **`xray-core`** — the `XraySpec`, the dataset fold (trades, book diffs,
+1. **`wickra-xray-core`** — the `XraySpec`, the dataset fold (trades, book diffs,
    funding/OI), the four microstructure panels, the `XrayFrame` data-model and
    `frame_at(ts)`, with near-total coverage via inline tests. *Done.*
 2. **`xray-cli`** — the reference `wickra-xray` binary: load a spec and a dataset,

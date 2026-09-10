@@ -9,7 +9,7 @@
 //! `--no-default-features` in CI rather than inside this single-binary test.
 
 use proptest::prelude::*;
-use xray_core::{
+use wickra_xray_core::{
     build_frame, BookEvent, BookKind, Candle, Dataset, FundingEvent, LiqSide, LiquidationEvent,
     OiEvent, PanelData, Side, Trade, XrayPanel, XraySpec,
 };

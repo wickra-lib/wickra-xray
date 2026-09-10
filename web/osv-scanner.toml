@@ -1,0 +1,29 @@
+# OSV-Scanner suppressions for the web renderer's lockfile.
+#
+# OSV-Scanner resolves a config per lockfile, from the directory the lockfile
+# sits in, so an entry for package-lock.json has to live here rather than in
+# the root osv-scanner.toml. The root file covers Cargo.lock and explains the
+# same split from the other side.
+
+[[IgnoredVulns]]
+id = "GHSA-w5hq-g745-h8pq"
+reason = """
+uuid's v3/v5/v6 accept a caller-supplied output buffer and do not reject
+out-of-range writes, so a caller passing a short `buf` or a large `offset` gets
+a silent partial write. Reaching it requires passing that buffer.
+
+The only thing in this tree that depends on uuid is
+vite-plugin-top-level-await, a build-time Vite plugin, and it calls the API
+with two arguments and no buffer:
+
+    dist/utils/random-identifier.js:8   v5(seed, INITIAL_NAMESPACE)
+    dist/utils/random-identifier.js:11  v5(this.state, this.state)
+
+so the vulnerable branch is not reachable from here. It is also build-time
+only -- the plugin renames identifiers while the bundle is built and ships no
+code into the browser artifact.
+
+There is no version to move to: 1.6.0 is the plugin's latest release and it
+pins uuid 10.0.0 itself. Drop this entry when the plugin publishes a release
+that depends on uuid >= 11.1.1.
+"""

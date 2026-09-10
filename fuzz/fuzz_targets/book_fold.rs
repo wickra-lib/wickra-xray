@@ -4,7 +4,7 @@
 //! empty sides, extreme prices) — may panic.
 
 use libfuzzer_sys::fuzz_target;
-use xray_core::{BookEvent, BookState};
+use wickra_xray_core::{BookEvent, BookState};
 
 fuzz_target!(|data: &[u8]| {
     let Ok(text) = std::str::from_utf8(data) else {

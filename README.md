@@ -32,7 +32,7 @@
 
 > **Part of the [Wickra ecosystem](https://github.com/wickra-lib):** the same data-driven core and ten-language binding surface also power [wickra-exchange](https://github.com/wickra-lib/wickra-exchange), [wickra-backtest](https://github.com/wickra-lib/wickra-backtest), [wickra-terminal](https://github.com/wickra-lib/wickra-terminal) and 20 more — see [the full list](https://github.com/wickra-lib).
 
-Wickra X-Ray is one data-driven core, [`xray-core`](crates/xray-core): a serde
+Wickra X-Ray is one data-driven core, [`wickra-xray-core`](crates/wickra-xray-core): a serde
 `XraySpec` is folded over a recorded dataset — trades, order-book diffs, funding
 and open interest — into **render data-models** (`XrayFrame`), never renderer
 commands. The frames carry the four microstructure panels; a front-end just
@@ -50,7 +50,7 @@ and a **web** front-end (Vue + Canvas) renders the frames in the browser.
 - **Funding / OI divergence** — funding, open interest and price on one time axis.
 
 ```rust
-use xray_core::{build_frame, Dataset, Xray, XraySpec};
+use wickra_xray_core::{build_frame, Dataset, Xray, XraySpec};
 
 // The full window: fold the whole dataset and build every panel the spec names.
 let spec: XraySpec = XraySpec::from_json(spec_json)?;
@@ -143,9 +143,9 @@ Node.js and WASM are native. See each `bindings/<lang>/README.md` and the runnab
 ## Project layout
 
 ```
-crates/xray-core    the data-driven core (XraySpec, Dataset, panels, build_frame, command_json)
+crates/wickra-xray-core    the data-driven core (XraySpec, Dataset, panels, build_frame, command_json)
 crates/xray-cli     the CLI (bin: wickra-xray)
-crates/xray-bench   criterion benchmarks
+crates/wickra-xray-bench   criterion benchmarks
 bindings/{python,node,wasm,c,go,csharp,java,r}   the ten-language surface
 web/                the Vue + Canvas browser renderer (over the WASM binding)
 golden/             a deterministic dataset, specs, and byte-exact expected frames
@@ -238,7 +238,7 @@ to be read before it is committed.
 
 ## Benchmarks
 
-`crates/xray-bench` measures `build_frame` scaling by event count and panel
+`crates/wickra-xray-bench` measures `build_frame` scaling by event count and panel
 count, parallel vs sequential. See [BENCHMARKS.md](BENCHMARKS.md).
 
 ## Ecosystem

@@ -11,7 +11,7 @@
 use pyo3::exceptions::PyValueError;
 use pyo3::prelude::*;
 
-use xray_core::Xray;
+use wickra_xray_core::Xray;
 
 /// An xray instance driven by JSON commands.
 ///
@@ -43,7 +43,7 @@ impl PyXray {
     /// The library version.
     #[staticmethod]
     fn version() -> &'static str {
-        xray_core::version()
+        wickra_xray_core::version()
     }
 }
 

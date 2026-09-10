@@ -8,7 +8,7 @@ open an issue first so we can agree on the approach.
 
 - The core — the `XraySpec`, the dataset fold (trades, book diffs, funding/OI)
   and the four microstructure panels built into an `XrayFrame` — lives in
-  `crates/xray-core`. Frames are **data, not code**: a serde data-model, so the
+  `crates/wickra-xray-core`. Frames are **data, not code**: a serde data-model, so the
   same frame crosses the C ABI and WASM unchanged.
 - The reference consumer is `crates/xray-cli` (the `wickra-xray` binary); the
   `web/` Vue front-end renders the same frames in the browser.
@@ -52,7 +52,7 @@ byte-identical report either way.
 
 Conditions are a serde enum, so extending the screen means adding a variant, not
 a closure. A new comparator, cross-section metric or breadth condition is added
-to `crates/xray-core/src/spec.rs` and handled in `src/eval.rs`, with a serde
+to `crates/wickra-xray-core/src/spec.rs` and handled in `src/eval.rs`, with a serde
 round-trip test and a golden fixture. Indicators themselves come from the
 [Wickra](https://github.com/wickra-lib/wickra) core registry by name and
 parameters — no indicator code lives here. See `docs/CONDITIONS.md` and

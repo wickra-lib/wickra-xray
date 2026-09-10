@@ -38,4 +38,4 @@ cast_possible_wrap = "allow"
 similar_names = "allow"
 
 [dependencies]
-xray-core = { workspace = true }
+wickra-xray-core = { workspace = true }
