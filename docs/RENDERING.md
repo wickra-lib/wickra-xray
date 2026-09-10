@@ -2,7 +2,7 @@
 
 A renderer draws a frame; it never touches the core's state. The core hands back
 a `PanelData` per panel (see [PANELS.md](PANELS.md)), and a front-end turns each
-data-model into pixels. Rendering lives entirely **outside** `xray-core` — the
+data-model into pixels. Rendering lives entirely **outside** `wickra-xray-core` — the
 reference implementation is the web app under [`web/`](../web), but the same data
 crosses every binding, so a renderer can be written in any language.
 

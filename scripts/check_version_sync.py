@@ -38,7 +38,7 @@ ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)),
 # (path, description, pattern with @V@ standing in for the version, expected count)
 TOUCHPOINTS: list[tuple[str, str, str, int]] = [
     ("Cargo.toml", "workspace version", r'(?m)^version = "@V@"$', 1),
-    ("Cargo.toml", "workspace dependency pin", r'xray-core = \{ version = "@V@", path = ', 1),
+    ("Cargo.toml", "workspace dependency pin", r'wickra-xray-core = \{ version = "@V@", path = ', 1),
     # Two manifests pin wickra-xray-core by path *and* version instead of through
     # the workspace: the wasm binding and the bench crate both want
     # `default-features = false`, which a `workspace = true` entry cannot add.
@@ -46,14 +46,14 @@ TOUCHPOINTS: list[tuple[str, str, str, int]] = [
     # declarations -- they look like dependency lines.
     (
         "bindings/wasm/Cargo.toml",
-        "xray-core pin",
-        r'path = "\.\./\.\./crates/xray-core", version = "@V@"',
+        "wickra-xray-core pin",
+        r'path = "\.\./\.\./crates/wickra-xray-core", version = "@V@"',
         1,
     ),
     (
-        "crates/xray-bench/Cargo.toml",
-        "xray-core pin",
-        r'path = "\.\./xray-core", version = "@V@"',
+        "crates/wickra-xray-bench/Cargo.toml",
+        "wickra-xray-core pin",
+        r'path = "\.\./wickra-xray-core", version = "@V@"',
         1,
     ),
     ("bindings/python/pyproject.toml", "wheel version", r'(?m)^version = "@V@"$', 1),

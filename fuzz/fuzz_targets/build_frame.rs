@@ -6,7 +6,7 @@
 
 use libfuzzer_sys::fuzz_target;
 use serde::Deserialize;
-use xray_core::{build_frame, Dataset, XraySpec};
+use wickra_xray_core::{build_frame, Dataset, XraySpec};
 
 #[derive(Deserialize)]
 struct Input {

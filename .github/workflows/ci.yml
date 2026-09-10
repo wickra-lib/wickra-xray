@@ -229,7 +229,7 @@ jobs:
         run: |
           set -euo pipefail
           published=()
-          for crate in xray-core wickra-xray; do
+          for crate in wickra-xray-core wickra-xray; do
             code=$(curl -sS -o /dev/null -w "%{http_code}" \
               -H "User-Agent: wickra-xray-ci" \
               "https://crates.io/api/v1/crates/$crate")
@@ -266,7 +266,7 @@ jobs:
       - name: Generate coverage (lcov)
         run: >
           cargo llvm-cov --no-default-features
-          -p xray-core
+          -p wickra-xray-core
           --lcov --output-path lcov.info
       - name: Upload to Codecov
         uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
@@ -376,7 +376,7 @@ jobs:
           # No `pip install --upgrade pip` first: that fetch is itself unpinned,
           # which is what the hash-locked file below exists to avoid, and the
           # runner image ships a pip far newer than --require-hashes needs.
-          python -m pip install --require-hashes -r .github/requirements/ci-dev-py3.txt
+          python -m pip install --require-hashes -r .github/requirements/ci-dev.txt
           ( cd bindings/python && maturin build --release --out dist )
           python -m pip install --no-index --find-links bindings/python/dist wickra-xray
           out=$(python examples/python/frame.py)
@@ -847,7 +847,8 @@ jobs:
           export WKXRAY_INC="${WKXRAY_INC//\\//}"
           export WKXRAY_LIB="${WKXRAY_LIB//\\//}"
           if command -v cygpath >/dev/null 2>&1; then
-            export PATH="$(cygpath -u "$WKXRAY_LIB"):$PATH"
+            WKXRAY_LIB_UNIX=$(cygpath -u "$WKXRAY_LIB")
+            export PATH="$WKXRAY_LIB_UNIX:$PATH"
           else
             export LD_LIBRARY_PATH="$WKXRAY_LIB:$LD_LIBRARY_PATH"
             export DYLD_LIBRARY_PATH="$WKXRAY_LIB:$DYLD_LIBRARY_PATH"

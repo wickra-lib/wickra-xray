@@ -14,7 +14,7 @@
 //! frame.
 //!
 //! ```
-//! use xray_core::Xray;
+//! use wickra_xray_core::Xray;
 //! let mut xray = Xray::new("").unwrap();
 //! let reply = xray.command_json(r#"{"cmd":"version"}"#).unwrap();
 //! assert!(reply.contains("version"));

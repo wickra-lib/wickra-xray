@@ -12,7 +12,7 @@
 
 use wasm_bindgen::prelude::*;
 
-use xray_core::Xray as CoreXray;
+use wickra_xray_core::Xray as CoreXray;
 
 /// An xray instance driven by JSON commands.
 #[wasm_bindgen]

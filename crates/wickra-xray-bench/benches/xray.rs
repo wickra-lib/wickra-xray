@@ -6,7 +6,7 @@
 use std::hint::black_box;
 
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, Throughput};
-use xray_core::{
+use wickra_xray_core::{
     build_frame, BookEvent, BookKind, Candle, Dataset, FundingEvent, LiqSide, LiquidationEvent,
     OiEvent, Side, Trade, XrayPanel, XraySpec,
 };

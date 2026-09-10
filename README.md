@@ -3,7 +3,6 @@
 </p>
 
 [![Built on Wickra](https://img.shields.io/badge/built%20on-wickra-3b82f6)](https://github.com/wickra-lib/wickra)
-[![Status](https://img.shields.io/badge/status-pre--release-orange)](https://github.com/wickra-lib/wickra-xray)
 [![CI](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/ci.svg)](https://github.com/wickra-lib/wickra-xray/actions/workflows/ci.yml)
 [![CodeQL](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/codeql.svg)](https://github.com/wickra-lib/wickra-xray/actions/workflows/codeql.yml)
 [![codecov](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/codecov.svg)](https://codecov.io/gh/wickra-lib/wickra-xray)
@@ -33,7 +32,7 @@
 
 > **Part of the [Wickra ecosystem](https://github.com/wickra-lib):** the same data-driven core and ten-language binding surface also power [wickra-exchange](https://github.com/wickra-lib/wickra-exchange), [wickra-backtest](https://github.com/wickra-lib/wickra-backtest), [wickra-terminal](https://github.com/wickra-lib/wickra-terminal) and 20 more — see [the full list](https://github.com/wickra-lib).
 
-Wickra X-Ray is one data-driven core, [`xray-core`](crates/xray-core): a serde
+Wickra X-Ray is one data-driven core, [`wickra-xray-core`](crates/wickra-xray-core): a serde
 `XraySpec` is folded over a recorded dataset — trades, order-book diffs, funding
 and open interest — into **render data-models** (`XrayFrame`), never renderer
 commands. The frames carry the four microstructure panels; a front-end just
@@ -51,7 +50,7 @@ and a **web** front-end (Vue + Canvas) renders the frames in the browser.
 - **Funding / OI divergence** — funding, open interest and price on one time axis.
 
 ```rust
-use xray_core::{build_frame, Dataset, Xray, XraySpec};
+use wickra_xray_core::{build_frame, Dataset, Xray, XraySpec};
 
 // The full window: fold the whole dataset and build every panel the spec names.
 let spec: XraySpec = XraySpec::from_json(spec_json)?;
@@ -69,11 +68,11 @@ let earlier = xray.command_json(r#"{"cmd":"frame_at","ts":1700000000000}"#)?;
 
 ## Status
 
-**Pre-release — functionally complete, CI-verified, not yet published.** The core,
-the CLI, all ten language bindings, the web renderer, the byte-exact golden
-corpus, property + fuzz tests, benchmarks and one runnable example per language
-are in place and green across the full CI matrix (10 languages × 3 OS). Not yet
-released to any registry — track progress in [ROADMAP.md](ROADMAP.md).
+**0.1.0 — the first release.** The core, the CLI, all ten language bindings, the
+web renderer, the byte-exact golden corpus, property + fuzz tests, benchmarks and
+one runnable example per language are in place and green across the full CI matrix
+(10 languages × 3 OS). [ROADMAP.md](ROADMAP.md) has what is done, what is open and
+what is not planned.
 
 ## Documentation
 
@@ -144,9 +143,9 @@ Node.js and WASM are native. See each `bindings/<lang>/README.md` and the runnab
 ## Project layout
 
 ```
-crates/xray-core    the data-driven core (XraySpec, Dataset, panels, build_frame, command_json)
+crates/wickra-xray-core    the data-driven core (XraySpec, Dataset, panels, build_frame, command_json)
 crates/xray-cli     the CLI (bin: wickra-xray)
-crates/xray-bench   criterion benchmarks
+crates/wickra-xray-bench   criterion benchmarks
 bindings/{python,node,wasm,c,go,csharp,java,r}   the ten-language surface
 web/                the Vue + Canvas browser renderer (over the WASM binding)
 golden/             a deterministic dataset, specs, and byte-exact expected frames
@@ -239,7 +238,7 @@ to be read before it is committed.
 
 ## Benchmarks
 
-`crates/xray-bench` measures `build_frame` scaling by event count and panel
+`crates/wickra-xray-bench` measures `build_frame` scaling by event count and panel
 count, parallel vs sequential. See [BENCHMARKS.md](BENCHMARKS.md).
 
 ## Ecosystem

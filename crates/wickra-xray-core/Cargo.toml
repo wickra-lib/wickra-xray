@@ -1,5 +1,5 @@
 [package]
-name = "xray-core"
+name = "wickra-xray-core"
 description = "Data-driven core of the Wickra X-Ray: a serde XraySpec folded over a recorded dataset into XrayFrame render data-models (footprint, order-book heatmap, liquidation map, funding/OI divergence)."
 version.workspace = true
 edition.workspace = true

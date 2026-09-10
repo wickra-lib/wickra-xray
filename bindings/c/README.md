@@ -1,7 +1,7 @@
 # Wickra X-Ray — C ABI
 
 The C ABI is the hub every C-capable language (C, C++, C#, Go, Java, R) links
-against. It exposes `xray-core` as a tiny, JSON-shaped surface built as both a
+against. It exposes `wickra-xray-core` as a tiny, JSON-shaped surface built as both a
 `cdylib` (dynamic library) and a `staticlib`.
 
 ## Surface

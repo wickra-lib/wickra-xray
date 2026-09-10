@@ -4,7 +4,7 @@
 //! `Err`. When it does parse, sorting and bounds are exercised too.
 
 use libfuzzer_sys::fuzz_target;
-use xray_core::Dataset;
+use wickra_xray_core::Dataset;
 
 fuzz_target!(|data: &[u8]| {
     let Ok(text) = std::str::from_utf8(data) else {

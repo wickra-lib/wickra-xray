@@ -4,7 +4,7 @@
 //! surface as a clean `Err`.
 
 use libfuzzer_sys::fuzz_target;
-use xray_core::{Config, XraySpec};
+use wickra_xray_core::{Config, XraySpec};
 
 fuzz_target!(|data: &[u8]| {
     let Ok(text) = std::str::from_utf8(data) else {

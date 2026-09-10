@@ -5,7 +5,7 @@
 //! cargo run -p wickra-xray-example
 //! ```
 
-use xray_core::{build_frame, Dataset, XraySpec};
+use wickra_xray_core::{build_frame, Dataset, XraySpec};
 
 const SPEC: &str = r#"{
     "dataset_ref": "m",
@@ -28,7 +28,7 @@ fn main() {
 
     let frame = build_frame(&dataset, &spec, cursor).expect("build frame");
 
-    println!("wickra-xray {}", xray_core::version());
+    println!("wickra-xray {}", wickra_xray_core::version());
     println!(
         "{}",
         serde_json::to_string(&frame).expect("serialize frame")

@@ -5,8 +5,8 @@ use std::fs;
 use std::io::Read;
 use std::path::Path;
 
-use xray_core::{Dataset, Xray};
-use xray_core::{
+use wickra_xray_core::{Dataset, Xray};
+use wickra_xray_core::{
     DivergenceData, FootprintData, HeatmapData, LiqMapData, OrderedF64, PanelData, XrayFrame,
     XraySpec,
 };

@@ -13,7 +13,7 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use xray_core::Xray;
+use wickra_xray_core::Xray;
 
 /// The repository-root `golden/` directory, resolved from this crate's manifest.
 fn golden_dir() -> PathBuf {

@@ -1,6 +1,6 @@
 # Wickra X-Ray — Python
 
-Python bindings for [`xray-core`](https://github.com/wickra-lib/wickra-xray),
+Python bindings for [`wickra-xray-core`](https://github.com/wickra-lib/wickra-xray),
 built with [PyO3] and [maturin]. The surface mirrors every other Wickra binding:
 build an `Xray` from a spec JSON, drive it with command JSONs, and read back
 render frames.

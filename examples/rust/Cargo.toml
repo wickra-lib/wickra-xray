@@ -15,5 +15,5 @@ name = "frame"
 path = "src/main.rs"
 
 [dependencies]
-xray-core = { workspace = true }
+wickra-xray-core = { workspace = true }
 serde_json = { workspace = true }

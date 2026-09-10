@@ -7,6 +7,8 @@ abstract: >-
   for footprint, order-book heatmap, liquidation map and funding/OI divergence,
   exposed as a JSON-over-C-ABI data API in ten languages with a web renderer.
 type: software
+version: "0.1.0"
+date-released: "2026-09-10"
 authors:
   - alias: kingchenc
     website: "https://wickra.org"

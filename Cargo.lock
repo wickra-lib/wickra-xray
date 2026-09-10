@@ -2742,14 +2742,35 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "serde_json",
- "xray-core",
+ "wickra-xray-core",
+]
+
+[[package]]
+name = "wickra-xray-bench"
+version = "0.1.0"
+dependencies = [
+ "codspeed-criterion-compat",
+ "wickra-xray-core",
 ]
 
 [[package]]
 name = "wickra-xray-c"
 version = "0.1.0"
 dependencies = [
- "xray-core",
+ "wickra-xray-core",
+]
+
+[[package]]
+name = "wickra-xray-core"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "rayon",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "toml",
+ "wickra-exchange",
 ]
 
 [[package]]
@@ -2757,7 +2778,7 @@ name = "wickra-xray-example"
 version = "0.1.0"
 dependencies = [
  "serde_json",
- "xray-core",
+ "wickra-xray-core",
 ]
 
 [[package]]
@@ -2767,7 +2788,7 @@ dependencies = [
  "napi",
  "napi-build",
  "napi-derive",
- "xray-core",
+ "wickra-xray-core",
 ]
 
 [[package]]
@@ -2775,7 +2796,7 @@ name = "wickra-xray-python"
 version = "0.1.0"
 dependencies = [
  "pyo3",
- "xray-core",
+ "wickra-xray-core",
 ]
 
 [[package]]
@@ -2783,7 +2804,7 @@ name = "wickra-xray-wasm"
 version = "0.1.0"
 dependencies = [
  "wasm-bindgen",
- "xray-core",
+ "wickra-xray-core",
 ]
 
 [[package]]
@@ -2996,27 +3017,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "05f360fc0b24296329c78fda852a1e9ae82de9cf7b27dae4b7f62f118f77b9ed"
 dependencies = [
  "tap",
-]
-
-[[package]]
-name = "xray-bench"
-version = "0.1.0"
-dependencies = [
- "codspeed-criterion-compat",
- "xray-core",
-]
-
-[[package]]
-name = "xray-core"
-version = "0.1.0"
-dependencies = [
- "proptest",
- "rayon",
- "serde",
- "serde_json",
- "thiserror",
- "toml",
- "wickra-exchange",
 ]
 
 [[package]]

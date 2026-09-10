@@ -3,7 +3,7 @@
 A dataset is the recorded market data a spec is folded over. It is a JSON object
 with six optional streams; every field defaults to an empty list, so a spec that
 only needs trades can load `{"trades":[...]}`. The core sorts each stream by
-timestamp on load and never mutates it afterwards (`crates/xray-core/src/dataset.rs`).
+timestamp on load and never mutates it afterwards (`crates/wickra-xray-core/src/dataset.rs`).
 
 ```json
 {

@@ -9,7 +9,7 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use xray_core::{PanelData, Xray, XrayFrame};
+use wickra_xray_core::{PanelData, Xray, XrayFrame};
 
 fn golden_dir() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR"))

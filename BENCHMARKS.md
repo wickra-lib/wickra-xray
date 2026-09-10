@@ -7,7 +7,7 @@ predictably with the dataset size and the panel configuration a spec references.
 
 ## What is measured
 
-The `xray-bench` crate (criterion) covers frame construction across a matrix of:
+The `wickra-xray-bench` crate (criterion) covers frame construction across a matrix of:
 
 - **Dataset size** — the number of events (trades + book diffs + funding/OI)
   folded before the frame is built.
@@ -21,7 +21,7 @@ Run against fixed, in-process synthetic datasets so the numbers are reproducible
 and contain no I/O variance:
 
 ```bash
-cargo bench -p xray-bench
+cargo bench -p wickra-xray-bench
 ```
 
 ## Results

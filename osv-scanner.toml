@@ -1,6 +1,27 @@
 # OSV-Scanner suppressions (VEX record). Consumed by OSV-Scanner and the
-# OpenSSF Scorecard Vulnerabilities check. Each entry would be an advisory
-# assessed as not affecting wickra-xray; this mirrors the cargo-deny
-# `ignore` list in deny.toml at the OSV layer.
+# OpenSSF Scorecard Vulnerabilities check. Each entry is an advisory assessed as
+# not affecting wickra-xray; this mirrors the cargo-deny `ignore` list in
+# deny.toml at the OSV layer.
 #
-# Keep in lock-step with deny.toml's [advisories].ignore. No suppressions yet.
+# OSV-Scanner resolves a config per lockfile, from the directory the lockfile
+# sits in -- so this file covers Cargo.lock, and web/package-lock.json has its
+# own osv-scanner.toml beside it. A single root file does not reach the web
+# lockfile: the scanner loads it, finds the id unmatched, and reports both the
+# vulnerability and an "unused ignores" warning.
+
+[[IgnoredVulns]]
+id = "RUSTSEC-2026-0235"
+reason = """
+rkyv 0.7.46 is in Cargo.lock and in no build graph. It is an optional
+dependency of rust_decimal, behind that crate's `rkyv` feature, and nothing
+here enables it -- `cargo tree -e all --all-features -i rkyv` finds no path to
+it at all, on any target. rust_decimal itself arrives through
+wickra-exchange-core, which the optional `live` feature pulls in.
+
+There is also nowhere to move to: the advisory is fixed in rkyv 0.8.17 and
+rust_decimal 1.42.1 requires ^0.7, so no resolution of this graph can reach the
+fix. That pin moves in rust_decimal, not here.
+
+Drop this entry when rust_decimal depends on rkyv >= 0.8.17, or when the `live`
+feature stops pulling rust_decimal in.
+"""

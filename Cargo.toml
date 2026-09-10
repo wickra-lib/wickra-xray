@@ -1,5 +1,5 @@
 # Wickra X-Ray — workspace.
-# A market-microstructure explorer built as one data-driven core (`xray-core`):
+# A market-microstructure explorer built as one data-driven core (`wickra-xray-core`):
 # a serde `XraySpec` is folded over a recorded dataset (trades, book diffs,
 # funding/OI) into render data-models (`XrayFrame` — footprint, order-book
 # heatmap, liquidation map, funding/OI divergence), never renderer commands. The
@@ -8,13 +8,13 @@
 # C/C++/C#/Go/Java/R; a `web/` Vue front-end renders the same frames.
 #
 # The `members` list grows as crates are added, phase by phase; the final set is:
-#   crates/xray-core, crates/xray-cli, crates/xray-bench,
+#   crates/wickra-xray-core, crates/xray-cli, crates/wickra-xray-bench,
 #   bindings/c, bindings/python, bindings/node, bindings/wasm
 # (`web/` is not a workspace member — it is an npm project.)
 
 [workspace]
 resolver = "2"
-members = ["crates/xray-core", "crates/xray-cli", "crates/xray-bench", "bindings/c", "bindings/python", "bindings/node", "bindings/wasm", "examples/rust"]
+members = ["crates/wickra-xray-core", "crates/xray-cli", "crates/wickra-xray-bench", "bindings/c", "bindings/python", "bindings/node", "bindings/wasm", "examples/rust"]
 # The fuzz crate is its own (detached) workspace — cargo-fuzz builds it on a
 # nightly toolchain with sanitizer flags.
 exclude = ["fuzz"]
@@ -53,7 +53,7 @@ wickra-exchange = { git = "https://github.com/wickra-lib/wickra-exchange", versi
 # is pinned alongside `git` so it is not a wildcard (cargo-deny bans.wildcards).
 wickra-backtest-core = { git = "https://github.com/wickra-lib/wickra-backtest", version = "0.1" }
 # Workspace-internal crate, referenced by the CLI, bench and bindings.
-xray-core = { version = "0.1.0", path = "crates/xray-core" }
+wickra-xray-core = { version = "0.1.0", path = "crates/wickra-xray-core" }
 # Serialization — the data-driven boundary (spec/command/frame as JSON).
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"

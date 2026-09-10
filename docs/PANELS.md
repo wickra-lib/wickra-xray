@@ -3,7 +3,7 @@
 A spec lists one or more panels; the frame returns one `PanelData` per spec
 panel, in the same order. Each panel is a pure aggregation of the dataset streams
 into a **render data-model** — arrays a front-end draws directly, never a draw
-command. The four panel kinds and their outputs (`crates/xray-core/src/panels/`):
+command. The four panel kinds and their outputs (`crates/wickra-xray-core/src/panels/`):
 
 ## `footprint`
 
