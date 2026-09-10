@@ -152,9 +152,14 @@ jobs:
       # that as success so re-runs of the workflow do not fail.
       - name: Publish wickra-xray-core (idempotent)
         run: |
-          out=$(cargo publish -p wickra-xray-core --token "$CARGO_REGISTRY_TOKEN" 2>&1) && echo "$out" \
-            || (echo "$out" | grep -q "already uploaded\|already exists" && echo "skip: already published" \
-                || (echo "$out"; exit 1))
+          if out=$(cargo publish -p wickra-xray-core --token "$CARGO_REGISTRY_TOKEN" 2>&1); then
+            echo "$out"
+          elif printf '%s' "$out" | grep -q "already uploaded\|already exists"; then
+            echo "skip: already published"
+          else
+            echo "$out"
+            exit 1
+          fi
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
 
@@ -163,9 +168,14 @@ jobs:
 
       - name: Publish wickra-xray (idempotent)
         run: |
-          out=$(cargo publish -p wickra-xray --token "$CARGO_REGISTRY_TOKEN" 2>&1) && echo "$out" \
-            || (echo "$out" | grep -q "already uploaded\|already exists" && echo "skip: already published" \
-                || (echo "$out"; exit 1))
+          if out=$(cargo publish -p wickra-xray --token "$CARGO_REGISTRY_TOKEN" 2>&1); then
+            echo "$out"
+          elif printf '%s' "$out" | grep -q "already uploaded\|already exists"; then
+            echo "skip: already published"
+          else
+            echo "$out"
+            exit 1
+          fi
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
 

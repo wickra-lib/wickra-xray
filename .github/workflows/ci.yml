@@ -847,7 +847,8 @@ jobs:
           export WKXRAY_INC="${WKXRAY_INC//\\//}"
           export WKXRAY_LIB="${WKXRAY_LIB//\\//}"
           if command -v cygpath >/dev/null 2>&1; then
-            export PATH="$(cygpath -u "$WKXRAY_LIB"):$PATH"
+            WKXRAY_LIB_UNIX=$(cygpath -u "$WKXRAY_LIB")
+            export PATH="$WKXRAY_LIB_UNIX:$PATH"
           else
             export LD_LIBRARY_PATH="$WKXRAY_LIB:$LD_LIBRARY_PATH"
             export DYLD_LIBRARY_PATH="$WKXRAY_LIB:$DYLD_LIBRARY_PATH"
