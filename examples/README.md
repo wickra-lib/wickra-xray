@@ -45,6 +45,6 @@ is no rpath.
 Every example prints the version and the frame, for example:
 
 ```text
-wickra-xray 0.1.0
+wickra-xray 0.1.1
 {"symbol":"AAA","cursor_ts":1400,"panels":[{"kind":"footprint","price_bins":[100.0,101.0],"buy_vol":[2.0,0.0],"sell_vol":[0.0,0.5]}]}
 ```

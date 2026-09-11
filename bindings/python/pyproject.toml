@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "wickra-xray"
-version = "0.1.0"
+version = "0.1.1"
 description = "The data-driven market-microstructure frame core: build an Xray from a spec, drive it with commands, read back frames."
 readme = "README.md"
 license = "MIT OR Apache-2.0"

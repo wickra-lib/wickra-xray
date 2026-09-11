@@ -10,7 +10,7 @@
     <AssemblyName>Wickra.Xray</AssemblyName>
 
     <PackageId>Wickra.Xray</PackageId>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Authors>kingchenc</Authors>
     <Description>The data-driven market-microstructure frame core for .NET over the Wickra C ABI: build an Xray from a spec, drive it with commands, read back render frames.</Description>
     <PackageLicenseExpression>MIT OR Apache-2.0</PackageLicenseExpression>

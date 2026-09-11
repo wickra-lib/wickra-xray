@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-09-11
+
+### Changed
+
+- The Wickra core the optional `live` feature resolves through moved from
+  `0.9.9` to `1.0.4`. It arrives transitively: `wickra-exchange` is consumed
+  from git, and the rev this repository pinned required the 0.9 line. Moving
+  the rev forward moved the core with it, so a graph that reached for both no
+  longer risks two incompatible majors.
+- The Node binding's generated loader (`index.js`) was regenerated for
+  `@napi-rs/cli` 3.9.0. A failed load now reports the whole chain of attempts
+  through `error.cause` rather than only the last one, and the WASI environment
+  variables changed meaning: `NAPI_RS_FORCE_WASI=true` keeps native as a lazy
+  fallback instead of discarding it, and `NAPI_RS_WASI_FLAVOR` selects one
+  generated flavour without crossing into another. The public surface
+  (`index.d.ts`) is unchanged.
+- Dependency updates: serde 1.0.229, thiserror 2.0.20, clap 4.6.6, pyo3 0.29.2,
+  rust_decimal 1.43.0; JUnit 6.1.3 with the Maven compiler and surefire plugins;
+  the .NET test SDKs; and nine pinned GitHub Actions, of which `setup-java`
+  crossed a major to v6.
+
+### Note on 0.1.0
+
+`0.1.0` is published on crates.io, PyPI, npm, NuGet, Maven Central and the Go
+module mirror, but it has no GitHub Release page. Its release run needed two
+attempts -- NuGet had no trusted-publishing policy on the first -- and by the
+second attempt Maven Central and the Go mirror both refused to repeat work they
+had already done, so the job that attaches the release assets never ran. Nothing
+about the published 0.1.0 artefacts is wrong; the release page is simply absent,
+and 0.1.1 is the first version to carry one.
+
+
 ## [0.1.0] - 2026-09-10
 
 ### Added
@@ -53,5 +85,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (`deny.toml`, `osv-scanner.toml`, `lychee.toml`), lint configuration
   (`clippy.toml`), `repo-metadata.toml`, and dual `MIT OR Apache-2.0` licensing.
 
-[Unreleased]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/wickra-lib/wickra-xray/releases/tag/v0.1.0

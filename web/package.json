@@ -1,7 +1,7 @@
 {
   "name": "wickra-xray-web",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "The Web renderer of the Wickra X-Ray: a Vue front-end over the WASM binding, rendering the core's XrayFrame data-models (footprint, book heatmap, liquidation map, funding/OI divergence) in the browser.",
   "license": "MIT OR Apache-2.0",

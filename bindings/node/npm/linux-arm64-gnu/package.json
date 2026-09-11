@@ -1,6 +1,6 @@
 {
   "name": "wickra-xray-linux-arm64-gnu",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Native binding for wickra-xray (Linux arm64 GNU). Installed automatically as an optional dependency of wickra-xray on matching platforms.",
   "main": "wickra-xray.linux-arm64-gnu.node",
   "files": [
