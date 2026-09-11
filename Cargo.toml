@@ -20,7 +20,7 @@ members = ["crates/wickra-xray-core", "crates/xray-cli", "crates/wickra-xray-ben
 exclude = ["fuzz"]
 
 [workspace.package]
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 rust-version = "1.86"
 license = "MIT OR Apache-2.0"
@@ -53,7 +53,7 @@ wickra-exchange = { git = "https://github.com/wickra-lib/wickra-exchange", versi
 # is pinned alongside `git` so it is not a wildcard (cargo-deny bans.wildcards).
 wickra-backtest-core = { git = "https://github.com/wickra-lib/wickra-backtest", version = "0.1" }
 # Workspace-internal crate, referenced by the CLI, bench and bindings.
-wickra-xray-core = { version = "0.1.0", path = "crates/wickra-xray-core" }
+wickra-xray-core = { version = "0.1.1", path = "crates/wickra-xray-core" }
 # Serialization — the data-driven boundary (spec/command/frame as JSON).
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"

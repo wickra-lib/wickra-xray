@@ -68,7 +68,7 @@ let earlier = xray.command_json(r#"{"cmd":"frame_at","ts":1700000000000}"#)?;
 
 ## Status
 
-**0.1.0 — the first release.** The core, the CLI, all ten language bindings, the
+**0.1.1 — the current release.** The core, the CLI, all ten language bindings, the
 web renderer, the byte-exact golden corpus, property + fuzz tests, benchmarks and
 one runnable example per language are in place and green across the full CI matrix
 (10 languages × 3 OS). [ROADMAP.md](ROADMAP.md) has what is done, what is open and
