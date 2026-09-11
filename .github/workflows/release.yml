@@ -320,8 +320,10 @@ jobs:
         with:
           targets: ${{ matrix.target }}
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
-      # npm install (not ci): the per-platform optionalDependencies are not yet
-      # published, so they are absent from the lock and npm ci would reject it.
+      # npm install (not ci): the per-platform optionalDependencies name this
+      # version's native packages, which the publish jobs below have not uploaded
+      # yet, so the lock carries no entry for them and npm ci would reject the
+      # tree. True of every release, not only the first.
       - name: Install Node deps
         run: cd bindings/node && npm install --no-audit --no-fund
       - name: Build native module
