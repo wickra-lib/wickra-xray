@@ -547,8 +547,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: npm
           cache-dependency-path: bindings/node/package-lock.json
-      # npm install (not npm ci): the per-platform optionalDependencies point at
-      # native packages that are not published until the first release.
+      # npm install (not npm ci): the per-platform optionalDependencies name the
+      # native packages at the version being built, and that version reaches npm
+      # only when this run's publish jobs finish -- so the lock deliberately
+      # carries no entry for them and `npm ci` would reject the tree. This holds
+      # for every release, not just the first; wickra-screener is on 0.1.3 and its
+      # lockfile still has zero platform entries for the same reason.
       - name: Install Node dependencies
         run: cd bindings/node && npm install --no-audit --no-fund
       - name: Build native module
