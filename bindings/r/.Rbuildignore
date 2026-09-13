@@ -22,3 +22,4 @@
 # corpus does not exist, and that is what r-universe runs on every platform. A
 # shipped test should not reason about the repository above it at all.
 ^tests/golden\.R$
+^src/libwickra_xray\.a$
