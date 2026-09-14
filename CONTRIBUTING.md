@@ -48,15 +48,18 @@ byte-identical report either way.
 - **Production code only** — no mocks outside `#[cfg(test)]`, no TODO stubs, and
   no defensive branches that can never run (they fail coverage).
 
-## Adding a condition or a metric
+## Adding a panel
 
-Conditions are a serde enum, so extending the screen means adding a variant, not
-a closure. A new comparator, cross-section metric or breadth condition is added
-to `crates/wickra-xray-core/src/spec.rs` and handled in `src/eval.rs`, with a serde
-round-trip test and a golden fixture. Indicators themselves come from the
+Panels are a serde enum, so extending the X-ray means adding a variant, not a
+closure. A new panel kind is a variant of `XrayPanel` in
+`crates/wickra-xray-core/src/spec.rs` and a module under
+`crates/wickra-xray-core/src/panels/` that folds the dataset streams into a
+render data-model -- arrays a front-end draws directly, never a draw command --
+with a serde round-trip test and a golden fixture, since the frame has to be
+byte-identical in every binding. Indicators themselves come from the
 [Wickra](https://github.com/wickra-lib/wickra) core registry by name and
-parameters — no indicator code lives here. See `docs/CONDITIONS.md` and
-`docs/INDICATORS.md`.
+parameters — no indicator code lives here. See [docs/PANELS.md](docs/PANELS.md),
+[docs/DATASETS.md](docs/DATASETS.md) and [docs/RENDERING.md](docs/RENDERING.md).
 
 ## Developer Certificate of Origin
 
