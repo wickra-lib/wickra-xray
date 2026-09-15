@@ -16,5 +16,5 @@ SystemRequirements: the wickra-xray C ABI shared library, downloaded
     into the package by configure. Set WKXRAY_INC and WKXRAY_LIB to build
     against a locally built C ABI instead (e.g. after `cargo build -p
     wickra-xray-c --release`).
-Depends: R (>= 2.10)
+Depends: R (>= 4.1)
 Config/roxygen2/version: 8.0.0
