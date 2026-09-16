@@ -71,6 +71,22 @@ updates:
       web:
         patterns: ["*"]
 
+  # Node example, like the siblings' second npm module.
+  - package-ecosystem: npm
+    directory: "/examples/node"
+    schedule:
+      interval: monthly
+      time: "06:00"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 10
+    cooldown:
+      default-days: 7
+    commit-message:
+      prefix: "deps(npm)"
+    groups:
+      node-example:
+        patterns: ["*"]
+
   # Python binding pip dependencies.
   - package-ecosystem: pip
     directory: "/bindings/python"

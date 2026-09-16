@@ -19,8 +19,6 @@ time.
 import json
 import pathlib
 
-import pytest
-
 from wickra_xray import Xray
 
 ROOT = pathlib.Path(__file__).resolve().parents[3]
@@ -45,7 +43,6 @@ def _clip(dataset: dict, cut: int) -> tuple[dict, int, int]:
     return clipped, kept, dropped
 
 
-@pytest.mark.skipif(not GOLDEN.exists(), reason="golden fixtures not present yet")
 def test_frame_at_equals_a_dataset_that_ends_there() -> None:
     spec = (GOLDEN / "specs" / "multi_panel.json").read_text(encoding="utf-8")
     dataset = json.loads((GOLDEN / "data.json").read_text(encoding="utf-8"))
@@ -64,7 +61,6 @@ def test_frame_at_equals_a_dataset_that_ends_there() -> None:
     assert at_cut == whole
 
 
-@pytest.mark.skipif(not GOLDEN.exists(), reason="golden fixtures not present yet")
 def test_folding_to_the_end_reproduces_the_full_frame() -> None:
     """The upper bound is where an off-by-one hides: the spec leaves ``to_ts``
     open, so ``frame``'s cursor is the dataset's own end and ``frame_at`` asked
@@ -80,7 +76,6 @@ def test_folding_to_the_end_reproduces_the_full_frame() -> None:
     )
 
 
-@pytest.mark.skipif(not GOLDEN.exists(), reason="golden fixtures not present yet")
 def test_a_midpoint_frame_reports_its_own_cursor() -> None:
     spec = (GOLDEN / "specs" / "multi_panel.json").read_text(encoding="utf-8")
     dataset = json.loads((GOLDEN / "data.json").read_text(encoding="utf-8"))
