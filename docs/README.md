@@ -32,3 +32,11 @@ Elsewhere in the repository:
 - [`../golden/README.md`](../golden/README.md) — the cross-language corpus and how to regenerate it
 - [`../CONTRIBUTING.md`](../CONTRIBUTING.md) — how to build, test and propose a change
 - [`../THREAT_MODEL.md`](../THREAT_MODEL.md) — what the X-Ray does and does not touch
+
+## Editing the docs
+
+The documentation site is a separate git repository at
+`https://github.com/wickra-lib/wickra-xray-site`. Open a pull request there to
+propose changes; the site is built with VitePress and deploys to
+`xray.wickra.org`. The files in this directory change in the same commit as
+the code they describe.

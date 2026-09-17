@@ -42,7 +42,7 @@ decimals. From that price the six streams are:
 - **liquidations** — sparse, at `i in {7, 14, 21}`: `price(i)`,
   `qty = 1 + (i mod 3)`, `side = long` when `sin(i/k) >= 0` else `short`.
 
-## Bless
+## Blessing
 
 Regenerate every `expected/<spec>.json` from the dataset (byte-exact) and commit
 the result:
