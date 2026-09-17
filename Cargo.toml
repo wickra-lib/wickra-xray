@@ -32,26 +32,24 @@ keywords = ["trading", "microstructure", "orderbook", "footprint", "finance"]
 categories = ["finance", "visualization", "command-line-utilities"]
 
 [workspace.dependencies]
-# Wickra ecosystem. The exchange facade is consumed from git until its first
-# crates.io release (its tag is USER-GO gated) and is used only by the optional
-# `live` feature. A `version` is pinned alongside `git` so the dependency is not
-# a wildcard (cargo-deny's `bans.wildcards = deny`).
+# Wickra ecosystem, all of it from crates.io, pinned exactly like every sibling.
+# The exchange facade is used only by the optional `live` feature. It was
+# consumed from git until its first crates.io release; that release is out, and
+# a git source would have meant `cargo publish` resolving a different crate than
+# the one that was tested.
 #
-# There were `wickra-core = "0.9"` and `wickra-data = "0.9"` entries here that no
-# member ever referenced: the panels are pure aggregations of the dataset streams
-# and resolve no indicator by name, so nothing in this workspace depends on
-# either crate. Both had reached 1.0.4 while these declarations still said 0.9,
-# and a caret pin cannot cross a major -- so they read as current and could not
-# move. The 0.9.9 that does appear in Cargo.lock arrives transitively through
-# `wickra-exchange-core`, which pins it: that pin moves in wickra-exchange, not
-# here, and re-adding a declaration here would not affect it. It would instead
-# put two wickra-core majors in one graph the moment a member did use one.
-wickra-exchange = { git = "https://github.com/wickra-lib/wickra-exchange", version = "0.1" }
+# There are no `wickra-core` / `wickra-data` entries here on purpose: the panels
+# are pure aggregations of the dataset streams and resolve no indicator by name,
+# so nothing in this workspace depends on either crate directly. The copy in
+# Cargo.lock arrives transitively through `wickra-exchange-core`, which pins
+# it; a declaration here would not move that pin and could only put two
+# `wickra-core` majors in one graph the moment a member used one.
+wickra-exchange = "=0.1.5"
 # The only name -> indicator registry in the ecosystem: the backtester's factory
 # resolves any of the 514 indicators by name + params into an object-safe
-# EvalIndicator. Consumed from git until its first crates.io release; a `version`
-# is pinned alongside `git` so it is not a wildcard (cargo-deny bans.wildcards).
-wickra-backtest-core = { git = "https://github.com/wickra-lib/wickra-backtest", version = "0.1" }
+# EvalIndicator. Now on crates.io, so the workspace no longer carries a git
+# dependency for it.
+wickra-backtest-core = "=0.1.6"
 # Workspace-internal crate, referenced by the CLI, bench and bindings.
 wickra-xray-core = { version = "0.1.3", path = "crates/wickra-xray-core" }
 # Serialization — the data-driven boundary (spec/command/frame as JSON).

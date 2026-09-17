@@ -290,7 +290,10 @@ jobs:
           persist-credentials: false
       - uses: ./.github/actions/setup-rust
         with:
-          toolchain: nightly
+          # The family's fuzz nightly, pinned by date: a rolling `nightly` regressed
+          # with a codegen ICE unrelated to this code. Move the date deliberately,
+          # in every repo at once.
+          toolchain: nightly-2026-07-01
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
         with:
           workspaces: fuzz
@@ -299,16 +302,16 @@ jobs:
         with:
           tool: cargo-fuzz
       - name: Fuzz spec_parse (30 s)
-        run: cargo +nightly fuzz run --target x86_64-unknown-linux-gnu spec_parse -- -max_total_time=30
+        run: cargo +nightly-2026-07-01 fuzz run --target x86_64-unknown-linux-gnu spec_parse -- -max_total_time=30
         working-directory: fuzz
       - name: Fuzz dataset_parse (30 s)
-        run: cargo +nightly fuzz run --target x86_64-unknown-linux-gnu dataset_parse -- -max_total_time=30
+        run: cargo +nightly-2026-07-01 fuzz run --target x86_64-unknown-linux-gnu dataset_parse -- -max_total_time=30
         working-directory: fuzz
       - name: Fuzz build_frame (30 s)
-        run: cargo +nightly fuzz run --target x86_64-unknown-linux-gnu build_frame -- -max_total_time=30
+        run: cargo +nightly-2026-07-01 fuzz run --target x86_64-unknown-linux-gnu build_frame -- -max_total_time=30
         working-directory: fuzz
       - name: Fuzz book_fold (30 s)
-        run: cargo +nightly fuzz run --target x86_64-unknown-linux-gnu book_fold -- -max_total_time=30
+        run: cargo +nightly-2026-07-01 fuzz run --target x86_64-unknown-linux-gnu book_fold -- -max_total_time=30
         working-directory: fuzz
 
   # The runnable examples are the first thing a reader copies, and only
@@ -376,7 +379,7 @@ jobs:
           # No `pip install --upgrade pip` first: that fetch is itself unpinned,
           # which is what the hash-locked file below exists to avoid, and the
           # runner image ships a pip far newer than --require-hashes needs.
-          python -m pip install --require-hashes -r .github/requirements/ci-dev.txt
+          python -m pip install --require-hashes -r .github/requirements/ci-dev-py3.txt
           ( cd bindings/python && maturin build --release --out dist )
           python -m pip install --no-index --find-links bindings/python/dist wickra-xray
           out=$(python examples/python/frame.py)
@@ -493,11 +496,33 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - uses: ./.github/actions/setup-rust
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
-      - run: pip install maturin pytest
+      # Hash-locked dev tooling (OpenSSF Scorecard PinnedDependencies), not a
+      # bare `pip install maturin pytest` that resolves whatever PyPI serves.
+      # Split by Python version: a resolution for 3.9 is not the same as one
+      # for 3.13, and the 3.9 lock carries no pytest (see the .in).
+      - name: Install the hash-locked tooling
+        shell: bash
+        run: |
+          if [ "${{ matrix.python-version }}" = "3.9" ]; then
+            python -m pip install --require-hashes -r .github/requirements/ci-dev-py39.txt
+          else
+            python -m pip install --require-hashes -r .github/requirements/ci-dev-py3.txt
+          fi
       - run: maturin build --out dist
         working-directory: bindings/python
       - run: pip install --no-index --find-links bindings/python/dist wickra-xray
-      - run: pytest bindings/python/tests -q
+      # 3.10 and up run the suite under pytest. The 3.9 row cannot: pytest 9.x
+      # requires 3.10, so pinning it there would mean carrying a version below
+      # the fix for GHSA-6w46-j5rx-g56g with no backport. It runs the same
+      # modules through run_without_pytest.py -- plain functions, plain asserts.
+      - name: Test the binding
+        shell: bash
+        run: |
+          if [ "${{ matrix.python-version }}" = "3.9" ]; then
+            python bindings/python/tests/run_without_pytest.py
+          else
+            pytest bindings/python/tests -q
+          fi
 
   python-wheel-container-smoke:
     name: Python wheel (${{ matrix.manylinux }} smoke)
@@ -803,7 +828,7 @@ jobs:
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
       - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
         with:
-          dotnet-version: "8.0"
+          dotnet-version: "8.0.x"
       # The test project copies the native library from target/release (see the
       # <Content> items), so build it in the release profile here.
       - name: Build the C ABI library
