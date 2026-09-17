@@ -41,7 +41,7 @@ This emits `pkg/` with the `.wasm` module and JS glue.
 ## Quick start
 
 ```js
-import init, { Xray, version } from "./pkg/wickra_xray_wasm.js";
+import init, { Xray, version } from "wickra-xray-wasm";
 
 await init();
 
