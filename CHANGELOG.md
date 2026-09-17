@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **wickra-exchange 0.1.5 and wickra-backtest-core 0.1.6, from crates.io.** Both
+  came from git -- "until its first crates.io release", which happened a while
+  ago -- and the lock held an exchange commit five behind that repository's
+  main. They are exact registry pins now like every sibling's, the lock follows
+  and `cargo check --all-features` passes; the comments beside them say what is
+  true today, including why no `wickra-core` line sits there.
+- **The Python 3.9 CI row installs no pytest, and the others install a lock.**
+  The binding test job ran `pip install maturin pytest` -- the only unpinned
+  install left in the family -- while a hash-locked `ci-dev.txt` beside it
+  pinned pytest 9.1.1, which 3.9 cannot install; the lock script already named
+  the split files that did not exist. The locks are `ci-dev-py3.txt` (pytest
+  9.1.1, 3.10 and up, and the example job) and `ci-dev-py39.txt` (maturin);
+  the 3.9 row runs the four modules through
+  `bindings/python/tests/run_without_pytest.py`. The golden test loops over
+  the specs instead of parametrizing, and the `skipif` guards that waited for
+  fixtures which landed long ago are gone.
+- **The repository spells shared things the way the family does.** A cross-repo
+  scan lined the 24 wickra-lib repositories up and this one also differed in:
+  `@napi-rs/cli` ^3.7.4 against ^3.9.0, `vite` ^6.0.0 in `web/` where
+  wickra-terminal's front-end says ^6.4.3, `dotnet-version: "8.0.x"` in the
+  example job, and `examples/node` absent from Dependabot.
+
 ### Fixed
 
 - **The Java binding loads the library it ships.** The jar carries the native
