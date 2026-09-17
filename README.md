@@ -24,13 +24,11 @@
 
 ---
 
-# Wickra X-Ray
-
 **A free explorer that shows, historically, what only Wickra computes — footprint, order-book heatmap, liquidation map and funding/OI divergence.**
 
 > **▶ Live demo:** all 514 indicators over real Binance market data, computed live in your browser — **[live.wickra.org](https://live.wickra.org)** · zero backend, powered by `wickra-wasm`.
 
-> **Part of the [Wickra ecosystem](https://github.com/wickra-lib):** the same data-driven core and ten-language binding surface also power [wickra-exchange](https://github.com/wickra-lib/wickra-exchange), [wickra-backtest](https://github.com/wickra-lib/wickra-backtest), [wickra-terminal](https://github.com/wickra-lib/wickra-terminal) and 20 more — see [the full list](https://github.com/wickra-lib).
+**Part of the [Wickra ecosystem](#ecosystem):** the same data-driven core and ten-language binding surface also power [wickra-exchange](https://github.com/wickra-lib/wickra-exchange), [wickra-backtest](https://github.com/wickra-lib/wickra-backtest), [wickra-terminal](https://github.com/wickra-lib/wickra-terminal) and 20 more — see [the full list](https://github.com/wickra-lib).
 
 Wickra X-Ray is one data-driven core, [`wickra-xray-core`](crates/wickra-xray-core): a serde
 `XraySpec` is folded over a recorded dataset — trades, order-book diffs, funding
@@ -68,11 +66,11 @@ let earlier = xray.command_json(r#"{"cmd":"frame_at","ts":1700000000000}"#)?;
 
 ## Status
 
-**0.1.3 — the current release.** The core, the CLI, all ten language bindings, the
-web renderer, the byte-exact golden corpus, property + fuzz tests, benchmarks and
-one runnable example per language are in place and green across the full CI matrix
-(10 languages × 3 OS). [ROADMAP.md](ROADMAP.md) has what is done, what is open and
-what is not planned.
+**0.1.3 — the current release.** The core, the CLI, all ten language bindings,
+the web renderer, the byte-exact golden corpus, property + fuzz tests,
+benchmarks and one runnable example per language are in place and green across
+the full CI matrix (10 languages × 3 OS). [ROADMAP.md](ROADMAP.md) has what is
+done, what is open and what is not planned.
 
 ## Documentation
 
@@ -286,8 +284,20 @@ vulnerabilities privately — never in a public issue.
 
 ## License
 
-Dual-licensed under either [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE), at
-your option.
+Licensed under either of
+
+- Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE) or
+  <http://www.apache.org/licenses/LICENSE-2.0>)
+- MIT license ([LICENSE-MIT](LICENSE-MIT) or <http://opensource.org/licenses/MIT>)
+
+at your option. Use it, fork it, modify it, redistribute it — commercially or
+not — file issues, send pull requests; all welcome.
+
+### Contribution
+
+Unless you explicitly state otherwise, any contribution intentionally submitted
+for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
+dual licensed as above, without any additional terms or conditions.
 
 ## Disclaimer
 
