@@ -6,6 +6,15 @@ from the same spec (a single `footprint` panel), loads a two-trade inline datase
 examples are self-contained: the spec and trades are inline, so there is no shared
 `data/` directory to load (the golden fixtures live in [`../golden/`](../golden)).
 
+## What every example prints
+
+Every example prints the version and the frame, for example:
+
+```text
+wickra-xray 0.1.3
+{"symbol":"AAA","cursor_ts":1400,"panels":[{"kind":"footprint","price_bins":[100.0,101.0],"buy_vol":[2.0,0.0],"sell_vol":[0.0,0.5]}]}
+```
+
 ## Rust — `examples/rust/`
 
 As the CI examples job runs it, from the repository root:
