@@ -9,9 +9,6 @@
 # lockfile: the scanner loads it, finds the id unmatched, and reports both the
 # vulnerability and an "unused ignores" warning.
 
-[[IgnoredVulns]]
-id = "RUSTSEC-2026-0235"
-reason = """
 rkyv 0.7.46 is in Cargo.lock and in no build graph. It is an optional
 dependency of rust_decimal, behind that crate's `rkyv` feature, and nothing
 here enables it -- `cargo tree -e all --all-features -i rkyv` finds no path to
