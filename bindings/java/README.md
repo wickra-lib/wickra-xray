@@ -36,14 +36,14 @@ Maven:
 <dependency>
   <groupId>org.wickra</groupId>
   <artifactId>wickra-xray</artifactId>
-  <version>0.1.3</version>
+  <version>0.1.4</version>
 </dependency>
 ```
 
 Gradle:
 
 ```kotlin
-implementation("org.wickra:wickra-xray:0.1.3")
+implementation("org.wickra:wickra-xray:0.1.4")
 ```
 
 The native library ships prebuilt per platform inside the jar and is

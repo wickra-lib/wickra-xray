@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.4] - 2026-09-18
+
 ### Changed
 
+- **Family pins follow the owners' releases:** wickra-backtest-core =0.1.6 -> =0.1.7, wickra-exchange =0.1.5 -> =0.1.6. No code of this repository changes; the engine it links is the one those releases ship.
 - **wickra-exchange 0.1.5 and wickra-backtest-core 0.1.6, from crates.io.** Both
   came from git -- "until its first crates.io release", which happened a while
   ago -- and the lock held an exchange commit five behind that repository's
@@ -192,7 +195,8 @@ and 0.1.1 is the first version to carry one.
   (`deny.toml`, `osv-scanner.toml`, `lychee.toml`), lint configuration
   (`clippy.toml`), `repo-metadata.toml`, and dual `MIT OR Apache-2.0` licensing.
 
-[Unreleased]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.3...HEAD
+[Unreleased]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.4...HEAD
+[0.1.4]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.0...v0.1.1
