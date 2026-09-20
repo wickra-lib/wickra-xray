@@ -2,7 +2,7 @@
   <a href="https://wickra.org"><img src="https://raw.githubusercontent.com/wickra-lib/.github/main/profile/wickra-banner.webp?v=514-7" alt="Wickra X-Ray — a market-microstructure explorer over 514 streaming indicators" width="100%"></a>
 </p>
 
-[![Built on Wickra](https://img.shields.io/badge/built%20on-wickra-3b82f6)](https://github.com/wickra-lib/wickra)
+[![Built on Wickra](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/built-on.svg)](https://github.com/wickra-lib/wickra)
 [![CI](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/ci.svg)](https://github.com/wickra-lib/wickra-xray/actions/workflows/ci.yml)
 [![CodeQL](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/codeql.svg)](https://github.com/wickra-lib/wickra-xray/actions/workflows/codeql.yml)
 [![codecov](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/codecov.svg)](https://codecov.io/gh/wickra-lib/wickra-xray)
@@ -20,7 +20,7 @@
 [![Build provenance](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/provenance.svg)](https://github.com/wickra-lib/wickra-xray/attestations)
 [![Docs](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/docs.svg)](https://xray.wickra.org)
 [![Verified across 10 languages](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/verified.svg)](golden/)
-[![Live demo](https://img.shields.io/badge/live%20demo-live.wickra.org-3b82f6)](https://live.wickra.org)
+[![Live demo](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/wickra-xray/live-demo.svg)](https://live.wickra.org)
 
 ---
 
