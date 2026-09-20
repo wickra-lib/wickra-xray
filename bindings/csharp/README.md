@@ -35,13 +35,15 @@ on macOS. Licensed under `MIT OR Apache-2.0`.
 
 ### Building from this repository (contributors)
 
-| Path | What it is |
-| --- | --- |
-| `WickraXray/` | The published package. Its own `README.md` is the long description NuGet renders. |
-| `WickraXray.Tests/` | xUnit suite: golden parity against the shared fixtures and the X-Ray command protocol. |
+```bash
+cargo build -p wickra-xray-c --release       # produces the native wickra_xray library
+dotnet test bindings/csharp/WickraXray.Tests
+dotnet run --project examples/csharp/Frame   # the runnable example
+```
 
-See [`WickraXray/README.md`](https://github.com/wickra-lib/wickra-xray/blob/main/bindings/csharp/WickraXray/README.md) for the full API walk-through,
-and [`examples/csharp/`](https://github.com/wickra-lib/wickra-xray/blob/main/examples/csharp) for a runnable program.
+Both the test project and the example copy the native library next to their
+output so the resolver finds it, on Windows, Linux and macOS. The package's
+long description on NuGet is this file.
 
 ## Quick start
 
