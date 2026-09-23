@@ -25,9 +25,9 @@ the refreshed dependency tree and toolchain pins.
 - **Built on wickra-core 1.0.5.** The lock takes the indicator core's latest
   release, reached through `wickra-exchange`; nothing here names it.
 - **Third-party dependencies refreshed.** `Cargo.lock` takes 114 crates to their
-  newest semver-compatible versions, run across the family in one pass so every repository resolves
-  the same day's versions. No manifest changed. The count includes Dependabot's
-  napi-group update.
+  newest semver-compatible versions, run across the family in one pass so every
+  repository resolves the same day's versions. No manifest changed. The count
+  includes Dependabot's napi-group update.
 - **`@napi-rs/cli` 3.10.4** for the Node binding, the family's line.
 - **uv 0.12.18** for the lockfile bootstrap in `scripts/update-lockfiles.sh`,
   with all four platform checksums moved together.
