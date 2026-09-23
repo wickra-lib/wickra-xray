@@ -11,7 +11,7 @@ examples are self-contained: the spec and trades are inline, so there is no shar
 Every example prints the version and the frame, for example:
 
 ```text
-wickra-xray 0.1.4
+wickra-xray 0.1.5
 {"symbol":"AAA","cursor_ts":1400,"panels":[{"kind":"footprint","price_bins":[100.0,101.0],"buy_vol":[2.0,0.0],"sell_vol":[0.0,0.5]}]}
 ```
 
