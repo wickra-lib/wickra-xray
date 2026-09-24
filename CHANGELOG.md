@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.7] - 2026-09-24
+
+A release-pipeline release: the explorer and its bindings are the same as in
+0.1.6. 0.1.6 was finished by the Maven pre-check's re-run path, which built its
+Java artefacts without the release profile, so its GitHub Release carries the
+main jar but not the sources and javadoc jars 0.1.5 carried. GitHub Releases
+cannot be changed once published; 0.1.7 is the complete one.
+
+### Fixed
+
+- **A release finished by a re-run keeps its sources and javadoc jars.** When
+  Maven Central already has the version, the Java job skips the deploy and
+  builds the jars for the release page itself. That build ran without the
+  release profile, which is what attaches the sources and javadoc jars, so the
+  page lacked the two that a normal release carries. It now builds with the
+  profile; signing and upload lie past the package phase and do not run.
+
 ## [0.1.6] - 2026-09-24
 
 A follow-up release: the explorer and its bindings are unchanged. It pins
@@ -267,7 +284,8 @@ and 0.1.1 is the first version to carry one.
   (`deny.toml`, `osv-scanner.toml`, `lychee.toml`), lint configuration
   (`clippy.toml`), `repo-metadata.toml`, and dual `MIT OR Apache-2.0` licensing.
 
-[Unreleased]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.6...HEAD
+[Unreleased]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.7...HEAD
+[0.1.7]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.6...v0.1.7
 [0.1.6]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.5...v0.1.6
 [0.1.5]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.3...v0.1.4

@@ -19,7 +19,7 @@ default = ["parallel"]
 parallel = ["wickra-xray-core/parallel"]
 
 [dependencies]
-wickra-xray-core = { path = "../wickra-xray-core", version = "0.1.6", default-features = false }
+wickra-xray-core = { path = "../wickra-xray-core", version = "0.1.7", default-features = false }
 
 [dev-dependencies]
 criterion.workspace = true
