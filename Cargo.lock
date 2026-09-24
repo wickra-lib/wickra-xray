@@ -2629,7 +2629,7 @@ dependencies = [
 
 [[package]]
 name = "wickra-xray"
-version = "0.1.6"
+version = "0.1.7"
 dependencies = [
  "clap",
  "serde_json",
@@ -2638,7 +2638,7 @@ dependencies = [
 
 [[package]]
 name = "wickra-xray-bench"
-version = "0.1.6"
+version = "0.1.7"
 dependencies = [
  "codspeed-criterion-compat",
  "wickra-xray-core",
@@ -2646,14 +2646,14 @@ dependencies = [
 
 [[package]]
 name = "wickra-xray-c"
-version = "0.1.6"
+version = "0.1.7"
 dependencies = [
  "wickra-xray-core",
 ]
 
 [[package]]
 name = "wickra-xray-core"
-version = "0.1.6"
+version = "0.1.7"
 dependencies = [
  "proptest",
  "rayon",
@@ -2666,7 +2666,7 @@ dependencies = [
 
 [[package]]
 name = "wickra-xray-example"
-version = "0.1.6"
+version = "0.1.7"
 dependencies = [
  "serde_json",
  "wickra-xray-core",
@@ -2674,7 +2674,7 @@ dependencies = [
 
 [[package]]
 name = "wickra-xray-node"
-version = "0.1.6"
+version = "0.1.7"
 dependencies = [
  "napi",
  "napi-build",
@@ -2684,7 +2684,7 @@ dependencies = [
 
 [[package]]
 name = "wickra-xray-python"
-version = "0.1.6"
+version = "0.1.7"
 dependencies = [
  "pyo3",
  "wickra-xray-core",
@@ -2692,7 +2692,7 @@ dependencies = [
 
 [[package]]
 name = "wickra-xray-wasm"
-version = "0.1.6"
+version = "0.1.7"
 dependencies = [
  "wasm-bindgen",
  "wickra-xray-core",
