@@ -1,6 +1,6 @@
 {
   "name": "wickra-xray",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "The data-driven market-microstructure frame core: build an Xray from a spec, drive it with commands, read back frames. Node bindings powered by Rust.",
   "author": "kingchenc <support@wickra.org>",
   "main": "index.js",
@@ -47,12 +47,12 @@
     "node": ">= 22"
   },
   "optionalDependencies": {
-    "wickra-xray-darwin-arm64": "0.1.5",
-    "wickra-xray-darwin-x64": "0.1.5",
-    "wickra-xray-linux-arm64-gnu": "0.1.5",
-    "wickra-xray-linux-x64-gnu": "0.1.5",
-    "wickra-xray-win32-arm64-msvc": "0.1.5",
-    "wickra-xray-win32-x64-msvc": "0.1.5"
+    "wickra-xray-darwin-arm64": "0.1.6",
+    "wickra-xray-darwin-x64": "0.1.6",
+    "wickra-xray-linux-arm64-gnu": "0.1.6",
+    "wickra-xray-linux-x64-gnu": "0.1.6",
+    "wickra-xray-win32-arm64-msvc": "0.1.6",
+    "wickra-xray-win32-x64-msvc": "0.1.6"
   },
   "scripts": {
     "build": "napi build --platform --release",
