@@ -2595,9 +2595,9 @@ dependencies = [
 
 [[package]]
 name = "wickra-exchange"
-version = "0.1.7"
+version = "0.1.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4c7101b33edb139cdef187c5faf70b759e6db873e1d7b61fb9da4f2c826bc8ad"
+checksum = "40a9559b60ee03a798367870346880ab49998c6bcfe02b0099d2058fca509485"
 dependencies = [
  "flate2",
  "futures-util",
@@ -2609,9 +2609,9 @@ dependencies = [
 
 [[package]]
 name = "wickra-exchange-core"
-version = "0.1.7"
+version = "0.1.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "80b085e2528517b59de0cac5c26b0ed99922f7db99bb8067245ebb9be29863d0"
+checksum = "34ea8c9061f9fdac95f13360864b11bd79899a4f84ee543e1a81b6723ca22e0e"
 dependencies = [
  "base64",
  "hex",
@@ -2629,7 +2629,7 @@ dependencies = [
 
 [[package]]
 name = "wickra-xray"
-version = "0.1.5"
+version = "0.1.6"
 dependencies = [
  "clap",
  "serde_json",
@@ -2638,7 +2638,7 @@ dependencies = [
 
 [[package]]
 name = "wickra-xray-bench"
-version = "0.1.5"
+version = "0.1.6"
 dependencies = [
  "codspeed-criterion-compat",
  "wickra-xray-core",
@@ -2646,14 +2646,14 @@ dependencies = [
 
 [[package]]
 name = "wickra-xray-c"
-version = "0.1.5"
+version = "0.1.6"
 dependencies = [
  "wickra-xray-core",
 ]
 
 [[package]]
 name = "wickra-xray-core"
-version = "0.1.5"
+version = "0.1.6"
 dependencies = [
  "proptest",
  "rayon",
@@ -2666,7 +2666,7 @@ dependencies = [
 
 [[package]]
 name = "wickra-xray-example"
-version = "0.1.5"
+version = "0.1.6"
 dependencies = [
  "serde_json",
  "wickra-xray-core",
@@ -2674,7 +2674,7 @@ dependencies = [
 
 [[package]]
 name = "wickra-xray-node"
-version = "0.1.5"
+version = "0.1.6"
 dependencies = [
  "napi",
  "napi-build",
@@ -2684,7 +2684,7 @@ dependencies = [
 
 [[package]]
 name = "wickra-xray-python"
-version = "0.1.5"
+version = "0.1.6"
 dependencies = [
  "pyo3",
  "wickra-xray-core",
@@ -2692,7 +2692,7 @@ dependencies = [
 
 [[package]]
 name = "wickra-xray-wasm"
-version = "0.1.5"
+version = "0.1.6"
 dependencies = [
  "wasm-bindgen",
  "wickra-xray-core",
