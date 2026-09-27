@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.8] - 2026-09-27
+
+A follow-up release: the explorer and its bindings are unchanged. It keeps the
+family's exact pins in step with wickra-backtest 0.1.9.
+
+### Changed
+
+- **The wickra-backtest pin follows 0.1.9.** The exact pin on
+  `wickra-backtest-core` moves from =0.1.8 to =0.1.9 in the workspace
+  declarations -- a declaration no workspace member uses yet, so no lockfile
+  changes.
+- **The Node binding's build-tool tree matches the family.** The packages
+  `bindings/node/package-lock.json` holds only for `@napi-rs/cli` 3.10.4 are
+  resolved again, so every repository in the family builds with one identical
+  tree; the CLI itself, which generates the committed loader, stays.
+- **The web front-end's toolchain lock follows the family line:** rolldown
+  1.2.11 and `@oxc-project/types` 0.151.0, as in wickra-playground and
+  wickra-terminal. vite stays at its declared 8.3 line.
+- **The READMEs show the organization's banner as vectors,** so its text stays
+  sharp at any width and zoom.
+
 ## [0.1.7] - 2026-09-24
 
 A release-pipeline release: the explorer and its bindings are the same as in
@@ -284,7 +305,8 @@ and 0.1.1 is the first version to carry one.
   (`deny.toml`, `osv-scanner.toml`, `lychee.toml`), lint configuration
   (`clippy.toml`), `repo-metadata.toml`, and dual `MIT OR Apache-2.0` licensing.
 
-[Unreleased]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.7...HEAD
+[Unreleased]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.8...HEAD
+[0.1.8]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.7...v0.1.8
 [0.1.7]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.6...v0.1.7
 [0.1.6]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.5...v0.1.6
 [0.1.5]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.4...v0.1.5

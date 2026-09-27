@@ -67,7 +67,7 @@ matching `PanelData`:
 cargo run -p wickra-xray -- --version
 ```
 
-or, from any binding, `{"cmd":"version"}` → `{"version":"0.1.7"}`.
+or, from any binding, `{"cmd":"version"}` → `{"version":"0.1.8"}`.
 
 ## See also
 
