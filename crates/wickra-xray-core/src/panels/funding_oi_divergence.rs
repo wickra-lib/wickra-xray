@@ -167,9 +167,9 @@ mod tests {
     #[test]
     fn empty_window_yields_empty_series() {
         let d = build(&Dataset::default(), 1000);
-        assert!(d.time.is_empty());
-        assert!(d.funding.is_empty());
-        assert!(d.oi.is_empty());
-        assert!(d.price.is_empty());
+        assert_eq!(d.time, Vec::<i64>::new());
+        assert_eq!(d.funding, Vec::<f64>::new());
+        assert_eq!(d.oi, Vec::<f64>::new());
+        assert_eq!(d.price, Vec::<f64>::new());
     }
 }

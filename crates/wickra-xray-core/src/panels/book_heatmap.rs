@@ -149,16 +149,16 @@ mod tests {
             ..Dataset::default()
         };
         let hm = build(&win, 1.0, 1000, 4);
-        assert!(hm.time.is_empty());
-        assert!(hm.price.is_empty());
-        assert!(hm.intensity.is_empty());
+        assert_eq!(hm.time, Vec::<i64>::new());
+        assert_eq!(hm.price, Vec::<f64>::new());
+        assert_eq!(hm.intensity, Vec::<Vec<f64>>::new());
     }
 
     #[test]
     fn no_book_events_is_empty() {
         let hm = build(&Dataset::default(), 1.0, 1000, 4);
-        assert!(hm.time.is_empty());
-        assert!(hm.price.is_empty());
-        assert!(hm.intensity.is_empty());
+        assert_eq!(hm.time, Vec::<i64>::new());
+        assert_eq!(hm.price, Vec::<f64>::new());
+        assert_eq!(hm.intensity, Vec::<Vec<f64>>::new());
     }
 }

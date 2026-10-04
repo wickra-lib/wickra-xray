@@ -96,6 +96,6 @@ mod tests {
     #[test]
     fn empty_window_yields_no_events() {
         let map = build(&Dataset::default(), 1.0);
-        assert!(map.events.is_empty());
+        assert_eq!(map.events, Vec::new());
     }
 }
