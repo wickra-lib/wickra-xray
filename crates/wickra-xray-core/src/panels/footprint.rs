@@ -80,8 +80,8 @@ mod tests {
     #[test]
     fn empty_window_yields_empty_bins() {
         let fp = build(&Dataset::default(), 1.0, 60_000);
-        assert!(fp.price_bins.is_empty());
-        assert!(fp.buy_vol.is_empty());
-        assert!(fp.sell_vol.is_empty());
+        assert_eq!(fp.price_bins, Vec::<f64>::new());
+        assert_eq!(fp.buy_vol, Vec::<f64>::new());
+        assert_eq!(fp.sell_vol, Vec::<f64>::new());
     }
 }
