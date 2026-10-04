@@ -16,8 +16,7 @@
     "node": ">=22"
   },
   "dependencies": {
-    "vue": "^3.5.0",
-    "wickra-xray-wasm": "file:../bindings/wasm/pkg"
+    "vue": "^3.5.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.9",

@@ -704,8 +704,8 @@ jobs:
         uses: taiki-e/install-action@9983c65e42da123ff25d1f78505eb6de315aa172 # v2.87.20
         with:
           tool: wasm-pack
-      # The web app depends on the wasm binding's pkg/ via a file: dependency, so
-      # build it before installing web dependencies.
+      # The web app imports the wasm binding's pkg/ through a Vite alias, so build
+      # it before the web build.
       - name: Build the wasm binding
         run: wasm-pack build --target web
         working-directory: bindings/wasm
