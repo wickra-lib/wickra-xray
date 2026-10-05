@@ -45,11 +45,6 @@ categories = ["finance", "visualization", "command-line-utilities"]
 # it; a declaration here would not move that pin and could only put two
 # `wickra-core` majors in one graph the moment a member used one.
 wickra-exchange = "=0.1.8"
-# The only name -> indicator registry in the ecosystem: the backtester's factory
-# resolves any of the 514 indicators by name + params into an object-safe
-# EvalIndicator. Now on crates.io, so the workspace no longer carries a git
-# dependency for it.
-wickra-backtest-core = "=0.1.9"
 # Workspace-internal crate, referenced by the CLI, bench and bindings.
 wickra-xray-core = { version = "0.1.8", path = "crates/wickra-xray-core" }
 # Serialization — the data-driven boundary (spec/command/frame as JSON).
