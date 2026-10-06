@@ -8,7 +8,7 @@ abstract: >-
   exposed as a JSON-over-C-ABI data API in ten languages with a web renderer.
 type: software
 version: "0.2.0"
-date-released: "2026-10-05"
+date-released: "2026-10-06"
 authors:
   - alias: kingchenc
     website: "https://wickra.org"
