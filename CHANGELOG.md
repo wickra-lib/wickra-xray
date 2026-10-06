@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-06
+
+A follow-up release on the wickra 2.0 family.
+
+### Changed
+
+- **Built on wickra 2.0 and wickra-exchange 0.2.0.** `wickra-core` 2.0, the
+  formula-audit release of the indicator core, arrives through wickra-exchange;
+  the exact pin on `wickra-exchange` moves from =0.1.8 to =0.2.0; every tracked
+  lockfile follows. Indicators the audit corrected return the values of their
+  published definitions; wickra's changelog lists them, with the warmup changes
+  and the new defaults.
+
 ## [0.1.8] - 2026-09-27
 
 A follow-up release: the explorer and its bindings are unchanged. It keeps the
@@ -305,7 +318,8 @@ and 0.1.1 is the first version to carry one.
   (`deny.toml`, `osv-scanner.toml`, `lychee.toml`), lint configuration
   (`clippy.toml`), `repo-metadata.toml`, and dual `MIT OR Apache-2.0` licensing.
 
-[Unreleased]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.8...HEAD
+[Unreleased]: https://github.com/wickra-lib/wickra-xray/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.8...v0.2.0
 [0.1.8]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.7...v0.1.8
 [0.1.7]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.6...v0.1.7
 [0.1.6]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.5...v0.1.6
