@@ -930,6 +930,7 @@ jobs:
       - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version: "1.23"
+          cache: false
       # Nothing here compiled the tree that is about to be published. A module
       # that does not build is a `go get` failure for every consumer, found by
       # them rather than here, and the mirror has no CI of its own.
@@ -952,7 +953,7 @@ jobs:
         id: mirror-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
-          app-id: ${{ secrets.WICKRA_BOT_APP_ID }}
+          client-id: ${{ vars.WICKRA_BOT_CLIENT_ID }}
           private-key: ${{ secrets.WICKRA_BOT_PRIVATE_KEY }}
           repositories: wickra-xray-go
           permission-contents: write
