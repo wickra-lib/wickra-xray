@@ -42,7 +42,8 @@ draws them. The parallel (rayon) and sequential (the WASM fallback) builds are
 Because the frame is **data, not code**, the exact same output crosses the C ABI
 and WASM unchanged. The core is exposed as a **JSON-over-C-ABI data API**
 (`Xray::command`) in **Rust, Python, Node.js, WASM, C, C++, C#, Go, Java and R**,
-and a **web** front-end (Vue + Canvas) renders the frames in the browser.
+and a **web** front-end (Vue + Canvas) renders the frames in the browser, live at
+**[xray-web.wickra.org](https://xray-web.wickra.org)**.
 
 - **Footprint** — traded volume per price bin, split by aggressor side.
 - **Order-book heatmap** — resting liquidity over a time × price grid.
