@@ -34,9 +34,10 @@ reviewed, CI-green pull requests. Status below is updated as phases complete.
    guard that refuses any ref that is not a `v*` tag.
 8. **README, badges, docs** — the banner + badge treatment and the docs guides.
    *Done.*
-9. **Deploy** — the web front-end published to a static host. *Open (USER-GO).*
-   `web-deploy.yml` builds the renderer on every push that touches it and skips
-   the deploy step until the Cloudflare Pages project and its token exist.
+9. **Deploy** — the web front-end published to a static host. *Done* — live at
+   [xray-web.wickra.org](https://xray-web.wickra.org): `web-deploy.yml` builds the
+   renderer on every push that touches it and commits `web/dist` to the `pages`
+   branch, which Cloudflare Pages serves.
 
 `0.1.0` is the first release: crates.io, PyPI, npm, NuGet, Maven Central, the
 `wickra-xray-go` module mirror and r-universe.
