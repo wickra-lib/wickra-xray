@@ -67,7 +67,7 @@ fn frame_at_midpoint_clips_the_window() {
     let bounds = xray.command_json(r#"{"cmd":"bounds"}"#).unwrap();
     let from_ts = i64_field(&bounds, "from_ts");
     let to_ts = i64_field(&bounds, "to_ts");
-    let mid = (from_ts + to_ts) / 2;
+    let mid = i64::midpoint(from_ts, to_ts);
 
     let full: XrayFrame =
         serde_json::from_str(&xray.command_json(r#"{"cmd":"frame"}"#).unwrap()).unwrap();

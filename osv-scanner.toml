@@ -4,7 +4,7 @@
 # deny.toml at the OSV layer.
 #
 # OSV-Scanner resolves a config per lockfile, from the directory the lockfile
-# sits in -- so this file covers Cargo.lock, and web/package-lock.json has its
-# own osv-scanner.toml beside it. A single root file does not reach the web
-# lockfile: the scanner loads it, finds the id unmatched, and reports both the
-# vulnerability and an "unused ignores" warning.
+# sits in -- so this file covers Cargo.lock only. An exception for
+# web/package-lock.json would need its own osv-scanner.toml in web/: a single
+# root file does not reach the web lockfile, the scanner loads it, finds the id
+# unmatched, and reports both the vulnerability and an "unused ignores" warning.
