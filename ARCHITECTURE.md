@@ -15,7 +15,7 @@ CORE  crates/wickra-xray-core:  XraySpec (JSON) → Dataset fold (trades / book 
                          → four microstructure panels → XrayFrame → frame_at(ts)
       ▼ data-driven JSON API in ten languages (like backtest run_json / terminal command_json)
 BINDINGS  python · node · wasm · c (C-ABI hub) → c / c++ / c# / go / java / r
-CORES  wickra-core (indicators) · wickra-data (Candle / CSV) · [feature "live"] wickra-exchange
+CORES  [feature "live"] wickra-exchange (a live dataset) — the panels need no indicator, see below
 ```
 
 Each binding ships the same surface — an `Xray` handle plus
@@ -57,18 +57,21 @@ as `0.0` (not omitted) so the frame shape is stable and comparable across
 timestamps — the deterministic basis for the golden corpus and for the web
 scrubber that seeks through history.
 
-## Indicators come from the Wickra core
+## Indicators: a reserved seam
 
-No indicator mathematics lives in this repository. Where a panel needs a derived
-series, `IndicatorSet` resolves each building block from the `wickra-core`
-registry by name and parameters (the same resolver the backtester uses), so
-`wickra-xray` inherits all 514 indicators and any future additions for free.
+No indicator mathematics lives in this repository, and today none is needed:
+the four panels are pure aggregations of the dataset's event streams, so
+`IndicatorSet` ships no resolver and the core depends on neither `wickra-core`
+nor `wickra-data`. It is where a panel that needs a derived series would
+resolve its building blocks by name and parameters through the
+`wickra-backtest` registry -- the resolver the screener and backtester use --
+bringing those dependencies back with it.
 
 ## Integration with the rest of Wickra
 
 `wickra-xray` sits beside the other Wickra consumers — the terminal, the
-screener, the backtester and the exchange layer — over the same core. It depends
-on `wickra-core` (indicators) and `wickra-data` (`Candle` + CSV); the optional
-`live` feature pulls `wickra-exchange` to source a live dataset. It only reads and
+screener, the backtester and the exchange layer — in the same family. Its core needs
+no `wickra-core` or `wickra-data` today (see above); the optional `live` feature
+pulls `wickra-exchange` to source a live dataset. It only reads and
 visualises market data — it never places orders and holds no order-secret
 material.
