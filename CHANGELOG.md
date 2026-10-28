@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-10-28
+
+A maintenance release: X-Ray and its bindings are unchanged. It ships the
+security fixes in the dependency tree.
+
+### Added
+
+- **The web renderer is served at xray-web.wickra.org.** CI builds it and
+  publishes it through a signed `pages` branch that Cloudflare Pages deploys,
+  without a Cloudflare token in the repository.
+
 ### Changed
 
 - **MSRV 1.87** (was 1.86) for the workspace; the Node binding stays at 1.88.
@@ -14,11 +25,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   releases that fix RUSTSEC-2026-0387 and RUSTSEC-2026-0385 require Rust 1.87.
   Every earlier crypto-bigint 0.7 release is yanked, so a fresh resolve could no
   longer build on 1.86.
+- **napi 3.15.0 with napi-derive 3.6.13** for the Node binding, moved together
+  with napi-derive-backend 6.1.6, napi-build 2.6.0 and napi-sys 3.4.1; the pair
+  Dependabot proposed on its own did not compile. `@napi-rs/cli` 3.10.8 builds
+  it. All five keep the binding's Rust 1.88 floor.
+- **pyo3 0.30.1** for the Python binding, and serde_json 1.0.154. pyo3 0.30
+  drops Python 3.8, which the wheels never supported: they still need Python 3.9
+  or later.
+- **central-publishing-maven-plugin 0.12.0** publishes the Java binding.
+- **uv 0.13.5** for the lockfile bootstrap in `scripts/update-lockfiles.sh`.
+- **The documentation describes X-Ray as it is:** no indicator resolver yet,
+  so it no longer claims to run over the core's 514 indicators.
 
 ### Security
 
 - **crypto-bigint 0.7.9, ctutils 0.4.6 and tokio 1.53.3** in the lockfile, for
   RUSTSEC-2026-0387, RUSTSEC-2026-0385 and RUSTSEC-2026-0386.
+- **rustls 0.23.46** in the lockfile, for RUSTSEC-2026-0346 to RUSTSEC-2026-0349:
+  TLS secrets in the `Debug` output of client session values, application data
+  sent to the outer server after an ECH rejection, Brotli certificate
+  decompression allocating before authentication, and a ServerHello downgrade to
+  classical key exchange.
+- **rustls-webpki 0.103.16 and webpki-roots 1.0.10** in the lockfile, for
+  RUSTSEC-2026-0382 and RUSTSEC-2026-0381: certificates chaining through the
+  distrusted emSign intermediates are refused.
 
 ## [0.2.0] - 2026-10-06
 
@@ -331,7 +361,8 @@ and 0.1.1 is the first version to carry one.
   (`deny.toml`, `osv-scanner.toml`, `lychee.toml`), lint configuration
   (`clippy.toml`), `repo-metadata.toml`, and dual `MIT OR Apache-2.0` licensing.
 
-[Unreleased]: https://github.com/wickra-lib/wickra-xray/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/wickra-lib/wickra-xray/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/wickra-lib/wickra-xray/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.8...v0.2.0
 [0.1.8]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.7...v0.1.8
 [0.1.7]: https://github.com/wickra-lib/wickra-xray/compare/v0.1.6...v0.1.7
