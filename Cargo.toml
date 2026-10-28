@@ -44,7 +44,7 @@ categories = ["finance", "visualization", "command-line-utilities"]
 # Cargo.lock arrives transitively through `wickra-exchange-core`, which pins
 # it; a declaration here would not move that pin and could only put two
 # `wickra-core` majors in one graph the moment a member used one.
-wickra-exchange = "=0.2.0"
+wickra-exchange = "=0.2.1"
 # Workspace-internal crate, referenced by the CLI, bench and bindings.
 wickra-xray-core = { version = "0.2.1", path = "crates/wickra-xray-core" }
 # Serialization — the data-driven boundary (spec/command/frame as JSON).
