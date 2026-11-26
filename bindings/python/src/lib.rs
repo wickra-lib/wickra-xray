@@ -49,7 +49,8 @@ impl PyXray {
 
 /// The native module (`wickra_xray._wickra_xray`).
 #[pymodule]
-fn _wickra_xray(module: &Bound<'_, PyModule>) -> PyResult<()> {
+#[pyo3(name = "_wickra_xray")]
+fn wickra_xray_extension(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add("__version__", env!("CARGO_PKG_VERSION"))?;
     module.add_class::<PyXray>()?;
     Ok(())
